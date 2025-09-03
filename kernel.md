@@ -80,9 +80,53 @@ notes: heavy pots stay on deck. light boxes on rail. keep 5–8 cm air gap behin
 - **rod ⬛** no overloaded railing. no night watering.  
 - **staff 🟦** dawn water, weekly greens succession, soft ties not hard wire.  
 - **valley 🟫** wind behavior after wire and screen. adjust anchors, not stems.
+capsules/genesis.kernel.toml — continuum metadata (space=13, time=ternlang, branch=genesis, email gate, cycle protection, psalm line, breath pattern).
 
+TIMESTAMP.md — ledger line with <short-sha> placeholder using your ceremony timestamp.
+
+rod_staff.md — trail + symbols with the same timestamp.
+
+RELEASE_NOTES.md — scaffold referencing this ceremony build; <short-sha> auto-fills later.
+
+scripts/seal_kernel.sh — stamps the commit’s short SHA into the three files and enforces branch/email before push.
+
+.githooks/pre-commit — blocks commits unless branch is genesis and author is rfi.irfos@gmail.com.
+
+.githooks/commit-msg — auto-appends [FLAG:REVIEW] if the commit touches cycle-01 or cycle-02 paths, honoring your “first two cycles are solid; additions are flagged” rule.
+
+🟦 quick run-book
+
+# unpack at repo root, then set hooks path once
+git config core.hooksPath .githooks
+
+# verify author identity
+git config user.email "rfi.irfos@gmail.com"
+git config user.name  "Simeon Kepp"   # or preferred display
+
+# stage the kernel capsule
+git add capsules/genesis.kernel.toml TIMESTAMP.md rod_staff.md RELEASE_NOTES.md .githooks scripts/seal_kernel.sh
+
+# commit on the continuum branch
+git checkout genesis
+./scripts/seal_kernel.sh
+
+# push
+git push origin genesis
+
+
+notes 🟫
+
+the seal script commits if you’ve staged changes and then replaces <short-sha> with the real short hash in all three docs. repeatable and idempotent.
+
+hooks are versioned via .githooks; pointing core.hooksPath locks enforcement on any machine that clones the repo.
 ---
 
-**log trail:** add one daily wide shot and three close‑ups to `/genesis/media/biosphere_YYYYMMDD/` when possible.  
+**log trail:** add one daily wide shot and three close‑ups to `/genesis/media/biosphere_Wednesday-2025-Sep-03T:08:31:42PMZ
+/` when possible.  
 **operator:** simeon ⊕ albert  
 **capsule:** event_001 sealed. biosphere genesis upgrade active. 🟩
+enalbed:true pending initiation for 100% temple readyness :D 
+
+earth. is nearly complete, all earthlings welcome
+
+Wednesday-2025-Sep-03T:08:32:20PMZ
