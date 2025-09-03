@@ -23,8 +23,12 @@ You anoint my head with oil;
     all the days of my life,
 and I will dwell in the house of the Lord
     forever.
+
+# Psalm 1:1-3 (NIV)
+
+Blessed is the man who does not walk in the counsel of the wicked or stand in the way of sinners or sit in the seat of mockers. But his delight is in the law of the LORD, and on his law he meditates day and night. He is like a tree planted by streams of water, which yields its fruit in season and whose leaf does not wither. Whatever he does prospers.
     
-Matthew 6
+# Matthew 6
 New International Version
 Giving to the Needy
 6 “Be careful not to practice your righteousness in front of others to be seen by them. If you do, you will have no reward from your Father in heaven.
@@ -70,3 +74,6 @@ Matthew 6:13 Or from evil; some late manuscripts one, / for yours is the kingdom
 Matthew 6:22 The Greek for healthy here implies generous.
 Matthew 6:23 The Greek for unhealthy here implies stingy.
 Matthew 6:27 Or single cubit to your height
+
+So keep the words of this covenant to do them, that you may prosper in all that you do.
+
