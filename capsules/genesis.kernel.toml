@@ -1,0 +1,29 @@
+# genesis kernel capsule — ceremony build
+# continuum: genesis
+# space: 13
+# time: ternlang
+
+[meta]
+name = "genesis-kernel"
+version = "0.0.1"
+timestamp_display = "Wednesday-2025-Sep-03T:08:27:42PMZ"
+timestamp_utc = "2025-09-03T20:27:42Z"
+author_email = "rfi.irfos@gmail.com"
+
+[constraints]
+primary_branch = "genesis"
+allowed_author = "rfi.irfos@gmail.com"
+cycle_protection = true
+flag_review_required = true
+
+[symbols]
+rod = "boundary"
+staff = "guidance"
+
+[ritual]
+psalm_line = "You prepare a table before me."
+music = "handpan_or_soft_drone"
+breath_pattern = "4-4-6"
+
+[ledger]
+files = ["TIMESTAMP.md", "rod_staff.md"]
