@@ -1,0 +1,152 @@
+import os
+from azure.ai.inference import ChatCompletionsClient
+from azure.ai.inference.models import SystemMessage, UserMessage
+from azure.core.credentials import AzureKeyCredential
+
+endpoint = "https://models.github.ai/inference"
+model = "openai/gpt-5"
+token = os.environ["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"]
+
+client = ChatCompletionsClient(
+    endpoint=endpoint,
+    credential=AzureKeyCredential(token),
+
+#!/usr/bin/env bash
+# cultivator.agent — Ternary Psalm 006 runner
+# mode: bash-guarded, portable, no exotic deps
+set -euo pipefail
+IFS=$'\n\t'
+
+ROOT_DIR="${ROOT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+AGENT_DIR="${AGENT_DIR:-$ROOT_DIR/agents}"
+LIB_DIR="${LIB_DIR:-$AGENT_DIR/lib}"
+CONF_FILE="${CONF_FILE:-$AGENT_DIR/cultivator.conf}"
+LOG_DIR="${LOG_DIR:-$ROOT_DIR/logs}"
+LEDGER="${LEDGER:-$ROOT_DIR/rod_staff.md}"
+STATUS="${STATUS:-$ROOT_DIR/status/cultivator.status}"
+HEALTH="${HEALTH:-$ROOT_DIR/status/health.json}"
+
+mkdir -p "$LOG_DIR" "$ROOT_DIR/status"
+
+# shellcheck source=lib/ternary.sh
+. "$LIB_DIR/ternary.sh"
+# shellcheck source=lib/ledger.sh
+. "$LIB_DIR/ledger.sh"
+# shellcheck source=lib/health.sh
+. "$LIB_DIR/health.sh"
+
+log() {
+  printf "%s %s\n" "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" "$*" | tee -a "$LOG_DIR/cultivator.log" >/dev/null
+}
+
+timestamp_pmz() {
+  # Wednesday-YYYY-Mon-DDT:hh:mm:ssAMZ (laptop-style as requested)
+  LC_ALL=C date -u "+%A-%Y-%b-%dT:%I:%M:%S%pZ"
+}
+
+load_conf() {
+  if [[ -f "$CONF_FILE" ]]; then
+    # shellcheck disable=SC1090
+    . "$CONF_FILE"
+  fi
+  : "${TEND_WINDOW:="morning,midday,evening"}"
+  : "${OFFERING_RATIO:=0.10}"
+  : "${FLOW_TARGET:=0.67}"           # target fraction of checks passing
+  : "${RHYTHM:="daily"}"
+}
+
+watering_can() {
+  # minimal, precise interventions based on health deltas
+  local moon phase weight
+  moon="$(moon_phase_symbol)"
+  phase="$(moon_phase_name)"
+  weight="$(ternary_weight)" # -1 / 0 / +1 numeric
+  log "💧 watering-can: phase=$phase $moon, weight=$weight"
+
+  # 1) REFRAIN: prune noise when critical
+  if health_is_critical "$HEALTH"; then
+    log "⬛ REFRAIN: pruning stale artifacts & rotating logs"
+    prune_noise
+    rotate_logs "$LOG_DIR"
+  fi
+
+  # 2) TEND: tiny fixes
+  if health_needs_tend "$HEALTH"; then
+    log "🟫 TEND: touching docs, refreshing indexes"
+    touch_docs
+    refresh_indexes
+  fi
+
+  # 3) AFFIRM: cultivate when green
+  if health_is_flowing "$HEALTH"; then
+    log "🟦 AFFIRM: seeding patterns & syncing ledgers"
+    seed_patterns
+    sync_ledgers
+  fi
+}
+
+prune_noise() {
+  find "$ROOT_DIR" -type f -name "*.tmp" -mtime +2 -delete 2>/dev/null || true
+}
+
+rotate_logs() {
+  local d="$1"
+  find "$d" -type f -name "*.log" -size +5M -print0 2>/dev/null | while IFS= read -r -d '' f; do
+    mv "$f" "${f}.$(date -u +%Y%m%d%H%M%S).gz" && : > "$f"
+  done
+}
+
+touch_docs() {
+  # encourage freshness for docs that act like soil
+  for f in "$ROOT_DIR"/README.md "$ROOT_DIR"/TIMESTAMP.md; do
+    [[ -f "$f" ]] && { sed -n '1,200p' "$f" >/dev/null; :; }
+  done
+}
+
+refresh_indexes() {
+  # generate a lightweight tree index
+  { echo "# index @ $(date -u +%FT%TZ)"
+    echo
+    (cd "$ROOT_DIR" && find . -maxdepth 3 -type f ! -path "./.git/*" | sort)
+  } > "$ROOT_DIR/status/INDEX.md"
+}
+
+seed_patterns() {
+  # create scaffold dirs/files if missing
+  mkdir -p "$ROOT_DIR/ternary_psalms" "$ROOT_DIR/status"
+  [[ -f "$ROOT_DIR/ternary_psalms/README.md" ]] || cat > "$ROOT_DIR/ternary_psalms/README.md" <<'EOF'
+# Ternary Psalms — Ledger
+This folder accumulates living psalms. Frameworks are alive, revisitable, upgradable.
+EOF
+}
+
+sync_ledgers() {
+  # append compact rod|staff|valley line if today’s entry missing
+  ensure_rod_staff_template "$LEDGER"
+  if ! grep -q "$(date -u +%Y-%b-%d)" "$LEDGER"; then
+    local now flags
+    now="$(timestamp_pmz)"
+    flags="🟩 $(moon_phase_symbol)"
+    append_rod_staff_one_liner "$LEDGER" "document noise kept minimal" "guide pace with rhythmic micro-fixes" "watch stale-index drift" "$now" "$flags"
+  fi
+}
+
+main() {
+  load_conf
+  log "▶ cultivator.agent start (rhythm=$RHYTHM, offering=$OFFERING_RATIO)"
+  # health sampling
+  compute_health_snapshot "$ROOT_DIR" > "$HEALTH"
+  render_status_card "$HEALTH" > "$STATUS"
+  show_status_line "$HEALTH"
+
+  # ritual offering first (Psalm 003)
+  perform_offering "$OFFERING_RATIO" "$ROOT_DIR" "$LOG_DIR"
+
+  # core watering logic
+  watering_can
+
+  # sign-off
+  log "✓ cultivator.agent done"
+}
+
+main "$@" 𒀭
