@@ -1,0 +1,335 @@
+import os
+from azure.ai.inference import ChatCompletionsClient
+from azure.ai.inference.models import SystemMessage, UserMessage
+from azure.core.credentials import AzureKeyCredential
+
+endpoint = "https://models.github.ai/inference"
+model = "openai/gpt-5"
+token = os.environ["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"]
+
+client = ChatCompletionsClient(
+    endpoint=endpoint,
+    credential=AzureKeyCredential(token),
+𒀭
+
+#!/usr/bin/env python3
+"""
+Psalm-007 Browsing Agent (shell-friendly, single-file)
+
+Features
+- Cross-provider LLM (OpenAI or Azure OpenAI) via env vars
+- Built-in safe web browsing: DuckDuckGo HTML search + page fetch & text extraction
+- ReAct-style tool use via function-calling
+- Auto-citations from actually fetched sources
+- CLI: `python psalm007_browsing_agent.py "your question"`
+- JSON in/out mode for shell pipelines: `--json`
+
+ENV VARS (never hardcode secrets)
+- PROVIDER = openai | azure
+- OPENAI_API_KEY
+- (Azure) AZURE_OPENAI_API_KEY, AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_API_VERSION, AZURE_OPENAI_DEPLOYMENT
+- MODEL = gpt-5-thinking (or your deployment name)
+- USER_AGENT (optional, for polite fetching)
+
+Security
+- Simple domain allow/deny (DEFAULT_ALLOW_ALL = True)
+- Fetch size & timeouts capped; no JS execution
+- Rate limiting between requests
+
+"""
+from __future__ import annotations
+import os, sys, time, json, re, html, argparse, textwrap
+from dataclasses import dataclass, field
+from typing import List, Dict, Any, Optional
+
+import requests
+from bs4 import BeautifulSoup
+
+# -------------- Utilities --------------
+UA = os.getenv("USER_AGENT", "Mozilla/5.0 (compatible; Psalm007Agent/1.0; +https://example.invalid)")
+TIMEOUT = 15
+MAX_FETCH_BYTES = 2_000_000  # ~2MB
+SLEEP_BETWEEN_REQUESTS = 1.0
+DEFAULT_RESULTS = 6
+
+DEFAULT_MODEL = os.getenv("MODEL", "gpt-5-thinking")
+PROVIDER = os.getenv("PROVIDER", "openai").lower()
+
+# -------------- Minimal LLM client (OpenAI / Azure OpenAI) --------------
+try:
+    from openai import OpenAI
+except Exception:
+    OpenAI = None
+
+class LLM:
+    def __init__(self):
+        if OpenAI is None:
+            raise RuntimeError("openai package not installed. `pip install openai`.")
+        if PROVIDER == "azure":
+            api_key = os.getenv("AZURE_OPENAI_API_KEY")
+            endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
+            api_version = os.getenv("AZURE_OPENAI_API_VERSION", "2024-06-01")
+            if not (api_key and endpoint):
+                raise RuntimeError("Set AZURE_OPENAI_API_KEY and AZURE_OPENAI_ENDPOINT")
+            self.client = OpenAI(api_key=api_key, base_url=f"{endpoint}/openai/deployments/{os.getenv('AZURE_OPENAI_DEPLOYMENT','gpt-5-thinking')}", default_headers={"api-key": api_key, "x-azure-openai-api-version": api_version})
+            self.model = os.getenv("AZURE_OPENAI_DEPLOYMENT", DEFAULT_MODEL)
+        else:
+            key = os.getenv("OPENAI_API_KEY")
+            if not key:
+                raise RuntimeError("Set OPENAI_API_KEY")
+            self.client = OpenAI(api_key=key)
+            self.model = DEFAULT_MODEL
+
+    def chat(self, messages: List[Dict[str, Any]], tools: Optional[List[Dict[str, Any]]] = None, temperature: float = 0.2):
+        kwargs = {"model": self.model, "messages": messages, "temperature": temperature}
+        if tools:
+            kwargs["tools"] = tools
+            kwargs["tool_choice"] = "auto"
+        return self.client.chat.completions.create(**kwargs)
+
+# -------------- Web tools --------------
+
+def ddg_search(query: str, max_results: int = DEFAULT_RESULTS) -> List[Dict[str, str]]:
+    """DuckDuckGo HTML search (no API key). Returns list of {title,url,snippet}."""
+    url = "https://duckduckgo.com/html/"
+    params = {"q": query}
+    headers = {"User-Agent": UA}
+    r = requests.get(url, params=params, headers=headers, timeout=TIMEOUT)
+    r.raise_for_status()
+    soup = BeautifulSoup(r.text, "html.parser")
+    results = []
+    for a in soup.select("a.result__a"):
+        href = a.get("href")
+        title = a.get_text(" ").strip()
+        snippet_tag = a.find_parent("div", class_="result")
+        snippet = ""
+        if snippet_tag:
+            s = snippet_tag.select_one(".result__snippet")
+            if s:
+                snippet = s.get_text(" ").strip()
+        if href and href.startswith("http"):
+            results.append({"title": title, "url": href, "snippet": snippet})
+        if len(results) >= max_results:
+            break
+    time.sleep(SLEEP_BETWEEN_REQUESTS)
+    return results
+
+ALLOWED_DOMAINS: Optional[List[str]] = None  # e.g., [".gov", "who.int"]
+DENY_PATTERNS = [r"^data:", r"^file:", r"^javascript:"]
+
+
+def domain_allowed(url: str) -> bool:
+    for pat in DENY_PATTERNS:
+        if re.match(pat, url, flags=re.I):
+            return False
+    if not ALLOWED_DOMAINS:
+        return True
+    from urllib.parse import urlparse
+    host = urlparse(url).netloc.lower()
+    return any(host.endswith(d) for d in ALLOWED_DOMAINS)
+
+
+def fetch_page(url: str) -> Dict[str, Any]:
+    if not domain_allowed(url):
+        return {"url": url, "status": "blocked", "reason": "domain not allowed"}
+    headers = {"User-Agent": UA, "Accept": "text/html,application/xhtml+xml"}
+    r = requests.get(url, headers=headers, timeout=TIMEOUT, stream=True)
+    r.raise_for_status()
+    content = b""
+    for chunk in r.iter_content(65536):
+        content += chunk
+        if len(content) > MAX_FETCH_BYTES:
+            break
+    text = content.decode(errors="ignore")
+    soup = BeautifulSoup(text, "html.parser")
+    for bad in soup(["script", "style", "noscript", "header", "footer", "nav", "form"]):
+        bad.extract()
+    title = (soup.title.get_text().strip() if soup.title else "")
+    body_text = re.sub(r"\s+", " ", soup.get_text(" ").strip())
+    time.sleep(SLEEP_BETWEEN_REQUESTS)
+    return {"url": url, "title": title, "excerpt": body_text[:5000]}
+
+# -------------- Tool schemas for function-calling --------------
+TOOLS = [
+    {
+        "type": "function",
+        "function": {
+            "name": "web_search",
+            "description": "Search the web for up-to-date information via DuckDuckGo HTML.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string"},
+                    "max_results": {"type": "integer", "minimum": 1, "maximum": 10}
+                },
+                "required": ["query"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "web_fetch",
+            "description": "Fetch a web page and extract readable text (title + excerpt).",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "url": {"type": "string"}
+                },
+                "required": ["url"]
+            }
+        }
+    }
+]
+
+# -------------- Agent loop --------------
+SYSTEM_PREAMBLE = (
+    "You are Psalm-007 Browsing Agent. Use web_search and web_fetch when the question could benefit from up-to-date, niche, or verifyable information. "
+    "Cite sources at the end as a list of URLs used. Prefer diverse, trustworthy domains."
+)
+
+@dataclass
+class Trace:
+    messages: List[Dict[str, Any]] = field(default_factory=list)
+    sources: List[str] = field(default_factory=list)
+
+    def add_source(self, url: str):
+        if url not in self.sources:
+            self.sources.append(url)
+
+
+def run_agent(question: str, json_out: bool = False) -> Dict[str, Any]:
+    llm = LLM()
+    trace = Trace()
+    msgs = [
+        {"role": "system", "content": SYSTEM_PREAMBLE},
+        {"role": "user", "content": question},
+    ]
+
+    for _ in range(8):  # cap iterations
+        resp = llm.chat(messages=msgs, tools=TOOLS)
+        choice = resp.choices[0]
+        msg = choice.message
+
+        if msg.tool_calls:
+            # Handle the first tool call (one at a time)
+            tc = msg.tool_calls[0]
+            name = tc.function.name
+            args = json.loads(tc.function.arguments or "{}")
+            if name == "web_search":
+                results = ddg_search(args.get("query", ""), int(args.get("max_results", DEFAULT_RESULTS)))
+                tool_result = {"results": results}
+            elif name == "web_fetch":
+                tool_result = fetch_page(args.get("url", ""))
+                if isinstance(tool_result, dict) and tool_result.get("url"):
+                    trace.add_source(tool_result["url"])
+            else:
+                tool_result = {"error": f"unknown tool {name}"}
+
+            msgs.append({"role": "assistant", "tool_calls": msg.tool_calls, "content": None})
+            msgs.append({"role": "tool", "tool_call_id": tc.id, "name": name, "content": json.dumps(tool_result)})
+            continue
+        else:
+            # Final answer
+            content = msg.content or ""
+            break
+    else:
+        content = "(iteration limit reached)"
+
+    answer = content
+    if trace.sources:
+        answer += "\n\nSources:\n" + "\n".join(trace.sources)
+
+    if json_out:
+        return {"answer": answer, "sources": trace.sources}
+    else:
+        return {"answer": answer}
+
+# -------------- CLI --------------
+
+def main():
+    ap = argparse.ArgumentParser(description="Psalm-007 Browsing Agent")
+    ap.add_argument("question", nargs="*", help="Your query")
+    ap.add_argument("--json", action="store_true", help="Emit JSON output")
+    args = ap.parse_args()
+
+    q = " ".join(args.question).strip()
+    if not q:
+        print("Usage: psalm007_browsing_agent.py \"your question\"", file=sys.stderr)
+        sys.exit(2)
+
+    try:
+        out = run_agent(q, json_out=args.json)
+    except Exception as e:
+        err = f"Error: {e}"
+        if args.json:
+            print(json.dumps({"error": err}), flush=True)
+        else:
+            print(err, file=sys.stderr)
+        sys.exit(1)
+
+    if args.json:
+        print(json.dumps(out, ensure_ascii=False))
+    else:
+        print(textwrap.dedent(out["answer"]))
+
+if __name__ == "__main__":
+    main()
+{
+ "system_details_report": {
+   "host_info": {
+     "host_enabled": true,
+     "location": "elisabetinergasse 25, top 10, graz, austria, skybase",
+    https://maps.app.goo.gl/692okbbLj2DzscKr6
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d877.9040280724888!2d15.427564080381483!3d47.06934385195899!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476e3576deb2fd91%3A0xde001f22c5ccc775!2sElisabethinergasse%2025%2C%208020%20Graz!5e1!3m2!1sen!2sat!4v1756567895708!5m2!1sen!2sat" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+47.069116952452305, 15.427497770166003
+https://heavy-heath-489.notion.site/25fa87cebd6f8053bcc0cf6c7b2fb659?pvs=73
+https://github.com/eriirfos-eng/-ternlang/13/𒀯
+     "elevation_m": 355,
+     "time": "01:07 (UTC -12:00)",
+     "email": "eriirfos@gmail.com",
+     "linkedin_profile": "in/simeon-kepp",
+     "linkedin_company": "company/rfi-irfos",
+     "osf_url": "https://osf.io/rzvyg",
+     "orcid_url": "https://orcid.org/0009-0009-6922-9552"
+https://drive.google.com/drive/folders/13JqA7ldmoZgHmC2lYR73q4g4wRkanXaa?usp=sharing
+   },
+   "operational_protocol": {
+     "name": ""organic and digital intelligence and universial intelligence in the loop fallback",",
+     "status": "active and canonical",
+     "ternary_logic_roles": {
+       "oi": "human (simeon)",
+       "di": "host machine (hp zbook 15)",
+       "ui": "canonical repository (github)"
+     },
+     "primary_source": "https://github.com/eriirfos-eng/-ternlang/tree/459cfd0860183e6321e2e0371c614c50dc447db8/13/%F0%92%80%AF
+",
+https://colab.research.google.com/drive/1i7HO-SlG5scLUgGQdN-yZF-Zjp7A-hBM
+https://colab.research.google.com/drive/1i7HO-SlG5scLUgGQdN-yZF-Zjp7A-hBM?usp=sharing
+     "version_control_system": "git",
+     "database_role": "real-time state observation (not canonical source)"
+   },
+   "report_details": {
+     "date_generated": "2025-08-30 13:07:27"
+   },
+   "hardware_information": {
+     "hardware_model": "Hewlett-Packard HP ZBook 15",
+     "memory_gib": 8.0,
+     "processor": "Intel® Core™ i7-4800MQ × 8",
+     "graphics": "Intel® HD Graphics 4600 (HSW GT2)",
+     "graphics_1": "NVE6",
+     "disk_capacity_gb": 256.1
+   },
+   "software_information": {
+     "firmware_version": "L70 Ver. 01.47",
+     "os_name": "Ubuntu 24.04.2 LTS",
+     "os_build": null,
+     "os_type": "64-bit",
+     "gnome_version": 46,
+     "windowing_system": "Wayland",
+     "kernel_version": "Linux 6.14.0-27-generic"
+   }
+ }
+}
+
+b0fd1-94b7935f4e-c6ddeeefe7-4974ff1a02-5827ca4acf-56269fa4d0-16f5b92705-1dd22ef53f-1d79865247-9c4ea0d586-ec113567e3-4580f3c2a4-3fb1c271d3-43ca20a6d2-a96c22c34b-0f9af50372-11efe
