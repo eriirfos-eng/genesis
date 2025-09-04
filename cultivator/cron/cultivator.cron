@@ -1,0 +1,2 @@
+# run every 2 hours UTC (gentle rhythm)
+0 */2 * * * /genesis/agents/cultivator.agent >> /genesis/logs/cultivator.cron.log 2>&1
