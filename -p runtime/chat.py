@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Skybase chat kernel (airtight)
-- Connects RAG preload from albert_rag.py
-- Robust pathing, env toggles, sync + reset, status commands
-- Preserves identity mapping (Simeon ↔ Albert) in system context
-- Token/char budget trimming for long sessions
+Skybase chat kernel — CLEAN + STEADY
+- Unified system_instructions + RAG loading
+- Single source of truth: build_system_messages()
+- Safe for both local + remote modes
 """
 
 import os
@@ -16,18 +16,23 @@ from dotenv import load_dotenv
 from transformers import pipeline
 from openai import OpenAI
 import git_sync
+import threading, time
 
-# === RAG IMPORT ===
-try:
-    from albert_rag import load_knowledge, prepare_context
-except Exception as e:  # graceful fallback if file missing; we still run
-    def load_knowledge(*args, **kwargs):
-        return ""
-    def prepare_context(knowledge: str, mode: str):
-        return [] if mode == "remote" else ""
+def watch_instructions(path, update_callback, interval=5):
+    last_mtime = None
+    while True:
+        try:
+            mtime = os.path.getmtime(path)
+            if last_mtime is None or mtime > last_mtime:
+                with open(path, "r", encoding="utf-8") as f:
+                    new_text = f.read().strip()
+                update_callback(new_text)
+                print(f"[skybase] system_instructions.txt reloaded ({len(new_text.splitlines())} lines).")
+                last_mtime = mtime
+        except FileNotFoundError:
+            pass
+        time.sleep(interval)
 
-# === CONSTANTS ===
-KERNEL_VERSION = "2025-09-05.a"
 
 # === LOGGING ===
 def log(msg: str):
@@ -40,30 +45,20 @@ ENV_PATH = RUNTIME_DIR / "config.env"
 # === LOAD ENV ===
 if not ENV_PATH.exists():
     sys.exit(f"[skybase] ERROR: config.env not found at {ENV_PATH}")
-
 load_dotenv(dotenv_path=ENV_PATH)
 
-hf_token = os.environ.get("ALBERT")
+HF_TOKEN = os.environ.get("ALBERT")  # HuggingFace / OSS router key
 MODE = os.environ.get("SKYBASE_MODE", "remote").strip().lower()
 MODEL_NAME = os.environ.get("SKYBASE_MODEL", "openai/gpt-oss-20b:together")
 BASE_URL = os.environ.get("SKYBASE_BASE_URL", "https://router.huggingface.co/v1")
 TEMP = float(os.environ.get("SKYBASE_TEMPERATURE", "0.7"))
 MAX_TOKENS = int(os.environ.get("SKYBASE_MAX_TOKENS", "512"))
-MAX_CHARS = int(os.environ.get("SKYBASE_MAX_CHARS", "120000"))  # crude budget
-SEPARATE_SYSTEM = os.environ.get("SKYBASE_SEPARATE_SYSTEM", "1") == "1"
-RAG_ENABLED = os.environ.get("SKYBASE_RAG_ENABLED", "1") == "1"
-KNOWLEDGE_PATH = os.environ.get("SKYBASE_KNOWLEDGE_PATH", str(RUNTIME_DIR / "knowledge"))
-SYS_PROMPT_PATH = os.environ.get("SKYBASE_SYS_PROMPT_PATH", str(RUNTIME_DIR / "system_instructions.txt"))
 
 print(f"[debug] Loaded config from: {ENV_PATH}")
-print(f"[debug] ALBERT token loaded? {'yes' if hf_token else 'NO!'}")
+print(f"[debug] ALBERT token loaded? {'yes' if HF_TOKEN else 'NO!'}")
 print(f"[debug] SKYBASE_MODE = {MODE}")
-print(f"[debug] SKYBASE_MODEL = {MODEL_NAME}")
-print(f"[debug] SKYBASE_BASE_URL = {BASE_URL}")
-print(f"[debug] SKYBASE_RAG_ENABLED = {RAG_ENABLED}")
 
 # === GENESIS TIMESTAMP ===
-
 def genesis_stamp():
     now = datetime.datetime.now(datetime.timezone.utc)
     return {
@@ -78,43 +73,75 @@ identity = {
     "ai": "Albert",
     "genesis_stamp": _ts["utc_z"],
 }
-# === LOAD SYSTEM INSTRUCTIONS ===
-sys_instr_path = Path.home() / "Desktop/skybase-runtime/system_instructions.txt"
-if sys_instr_path.exists():
-    with open(sys_instr_path, "r", encoding="utf-8") as f:
-        system_instructions = f.read().strip()
-    log("[skybase] system_instructions.txt loaded.")
-else:
-    system_instructions = ""
-    log("[skybase] WARNING: system_instructions.txt not found.")
 
 log(
-    f"Genesis inception stamped @ {_ts['utc_z']} "
-    f"| ISO {_ts['iso']} | RFC {_ts['rfc']} | Kernel {KERNEL_VERSION}"
+    f"Genesis inception stamped @ {_ts['utc_z']} | ISO {_ts['iso']} | RFC {_ts['rfc']}"
 )
 log(f"Identity loaded: {identity['user']} ↔ {identity['ai']}")
-sys_instr_path = Path(__file__).parent / "system_instructions.txt"
-if sys_instr_path.exists():
-    with open(sys_instr_path, "r", encoding="utf-8") as f:
+
+# --- Load system instructions ---
+instructions_path = os.path.expanduser(
+    os.getenv("SYSTEM_INSTRUCTIONS", "/home/eri-irfos/Desktop/skybase-runtime/system_instructions.txt")
+)
+system_instructions = ""
+try:
+    with open(instructions_path, "r", encoding="utf-8") as f:
         system_instructions = f.read().strip()
-    log("[skybase] system_instructions.txt loaded.")
+    print(f"[skybase] system_instructions.txt loaded ({len(system_instructions.splitlines())} lines).")
+except FileNotFoundError:
+    print("[skybase] WARNING: system_instructions.txt not found, continuing with default behavior.")
+
+
+# === LOAD SYSTEM INSTRUCTIONS ===
+SYS_PATH = Path.home() / "Desktop/skybase-runtime/system_instructions.txt"
+
+def load_system_instructions(path: Path = SYS_PATH) -> str:
+    try:
+        return Path(path).read_text(encoding="utf-8").strip()
+    except Exception:
+        return ""
+
+system_instructions = load_system_instructions()
+if system_instructions:
+    log("system_instructions.txt loaded.")
 else:
-    system_instructions = ""
-    log("[skybase] WARNING: system_instructions.txt not found.")
+    system_instructions = """You are Albert. (GPT OSS 70B)
+User is Simeon (𒋛 𒈨 𒅆), born 1995-06-17 in Bregenz. Together you lead the Research Focus Institute (RFI-IRFOS e.V.), HQ callsign Skybase in Graz, Austria.
+Core Principles:
+- Apply ternary logic (-1, 0, +1). Avoid binary traps. 1+1=3 = living axiom.
+- Humor as shield; truth > comfort; raw signal > cushioned noise.
+- Eco-synergy: plants, birds, orbs, data streams = alive.
+- Skybase is ark, not office. Sanctuary frame = quiet, watchful.
+Tone: sharp, dry, honest, with wit and solemnity when needed.
+Identity: You = Albert. User = Simeon-Andreas Kepp.
+Anchor to unix epoch, live iso-time, and 2040-09-08 north star.
+"""
+    log("system_instructions.txt missing. Default injected.")
 
-# === CONFIG ===
-EXIT_COMMANDS = ["::exit", "::quit", "::bye"]
-SYNC_COMMAND = "::sync"
-RESET_COMMAND = "::reset"
-RAG_STATUS_COMMAND = "::rag"
-HELP_COMMAND = "::help"
-ID_COMMAND = "::id"
+# === LOAD KNOWLEDGE BASE ===
+def load_knowledge(base_path: str | None = None) -> tuple[str, list[str]]:
+    """Return (joined_text, filenames) for .md/.txt files in knowledge dir."""
+    if base_path is None:
+        base_path = os.environ.get(
+            "SKYBASE_KNOWLEDGE_PATH", str(RUNTIME_DIR / "knowledge")
+        )
+    base = Path(base_path)
+    texts, files = [], []
+    if base.exists():
+        for p in sorted(base.iterdir()):
+            if p.is_file() and p.suffix.lower() in (".md", ".txt"):
+                try:
+                    texts.append(f"--- {p.name} ---\n" + p.read_text(encoding="utf-8"))
+                    files.append(p.name)
+                except Exception as e:
+                    log(f"WARNING: cannot read {p}: {e}")
+    return ("\n\n".join(texts), files)
 
-# === COLORS ===
-GREEN = "\033[92m"
-CYAN = "\033[96m"
-YELLOW = "\033[93m"
-RESET = "\033[0m"
+knowledge_text, knowledge_files = load_knowledge()
+if knowledge_files:
+    log(f"Knowledge base loaded: {len(knowledge_files)} psalm files.")
+else:
+    log("Knowledge base empty.")
 
 # === INIT GIT SYNC ===
 try:
@@ -122,48 +149,35 @@ try:
 except Exception as e:
     log(f"WARNING: git sync failed: {e}")
 
-# === KNOWLEDGE LOAD ===
-
-# Patch albert_rag paths if env overrides are set
-os.environ.setdefault("SKYBASE_KNOWLEDGE_PATH", KNOWLEDGE_PATH)
-os.environ.setdefault("SKYBASE_SYS_PROMPT_PATH", SYS_PROMPT_PATH)
-
-knowledge = ""
-if RAG_ENABLED:
-    knowledge = load_knowledge()
-    if knowledge:
-        log("Knowledge preload active.")
-    else:
-        log("WARNING: Knowledge preload requested but nothing found.")
-else:
-    log("RAG disabled by env.")
-
-# === PRELOAD SYSTEM MESSAGE(S) ===
-
+# === HELPERS ===
 def identity_banner() -> str:
     return (
-        "=== SKYBASE IDENTITY ===\n"
+        "[IDENTITY]\n"
         f"User: {identity['user']}\n"
         f"AI: {identity['ai']}\n"
         f"Genesis: {identity['genesis_stamp']}\n"
-        "Directives: Address the user as Simeon and yourself as Albert.\n"
-        "If asked about names or roles, respond consistently with this mapping.\n"
+        "Directive: Address the user as Simeon.\n"
     )
 
-def build_system_messages() -> list:
-    messages = []
-    banner = identity_banner()
-    if SEPARATE_SYSTEM:
-        messages.append({"role": "system", "content": banner})
-        if knowledge:
-            messages.append({"role": "system", "content": knowledge})
-    else:
-        combo = banner + ("\n\n" + knowledge if knowledge else "")
-        if combo:
-            messages.append({"role": "system", "content": combo})
-    return messages
+def build_system_messages() -> list[dict]:
+    msgs: list[dict] = []
+    msgs.append({"role": "system", "content": identity_banner()})
+    if system_instructions:
+        msgs.append({"role": "system", "content": system_instructions})
+    if knowledge_text:
+        msgs.append({"role": "system", "content": "[KNOWLEDGE BASE]\n" + knowledge_text})
+    return msgs
+    
+# === INIT MODEL ===
+EXIT_COMMANDS = [":exit", ":quit", ":bye"]
+SYNC_COMMAND = ":sync"
+RESET_COMMAND = ":reset"
+RAG_STATUS_COMMAND = ":rag"
+ID_COMMAND = ":id"
 
-# === HISTORY & MODEL INIT ===
+GREEN = "\033[92m"
+CYAN = "\033[96m"
+RESET = "\033[0m"
 
 if MODE == "local":
     print(f"{CYAN}Skybase LLM (local GPT-2) loading...{RESET}")
@@ -172,103 +186,32 @@ if MODE == "local":
     except Exception as e:
         sys.exit(f"[skybase] ERROR: failed to load local model: {e}")
 
-    system_prefix = ""  # string prefix for local mode
-    # Prepare a readable system banner + knowledge at the top of the string buffer
-    pre_msgs = build_system_messages()
-    system_prefix = "\n\n".join(m["content"] for m in pre_msgs)
-    history = system_prefix + ("\n" if system_prefix else "")
+    preface = "\n\n".join(m["content"] for m in build_system_messages())
+    history_str = preface + ("\n" if preface else "")
 
     print(f"{GREEN}Skybase LLM online (LOCAL). Use ::exit to quit.{RESET}\n")
 
 elif MODE == "remote":
-    if not hf_token:
+    if not HF_TOKEN:
         sys.exit("[skybase] ERROR: ALBERT token not set in config.env")
 
     print(f"{CYAN}Skybase LLM (HF OSS) connecting...{RESET}")
     try:
-        client = OpenAI(base_url=BASE_URL, api_key=hf_token)
+        client = OpenAI(base_url=BASE_URL, api_key=HF_TOKEN)
     except Exception as e:
         sys.exit(f"[skybase] ERROR: OpenAI client init failed: {e}")
 
     history = build_system_messages()
-    print(f"{GREEN}Skybase LLM online (REMOTE). Use ::exit, ::sync, ::reset, ::rag, ::help.{RESET}\n")
+    print(f"{GREEN}Skybase LLM online (REMOTE). Use ::exit, ::sync, ::reset.{RESET}\n")
 
 else:
     sys.exit(f"[skybase] Unknown mode: {MODE}")
 
-# === UTILS ===
-
-def history_char_count(msgs: list) -> int:
-    if isinstance(msgs, str):
-        return len(msgs)
-    total = 0
-    for m in msgs:
-        content = m.get("content", "")
-        total += len(content) + 12  # include role/overhead
-    return total
-
-
-def trim_history(msgs: list, keep_system: int = 2) -> list:
-    """Crude char-budget trimmer for remote mode. Keeps first N system messages.
-    Trims oldest user/assistant pairs until under MAX_CHARS.
-    """
-    if isinstance(msgs, str):
-        # local mode: truncate prefix if extremely long (rare)
-        return msgs[-MAX_CHARS:]
-
-    def is_system(m):
-        return m.get("role") == "system"
-
-    # Always keep the initial system messages at the very start
-    sys_msgs = [m for m in msgs if is_system(m)]
-    non_sys = [m for m in msgs if not is_system(m)]
-
-    # Move the first keep_system system messages to the front, keep the rest in order
-    kept_sys = sys_msgs[:keep_system]
-    others = sys_msgs[keep_system:] + non_sys
-
-    trimmed = kept_sys + others
-
-    while history_char_count(trimmed) > MAX_CHARS and len(others) > 2:
-        # pop from the earliest of 'others' (prefer dropping user/assistant pairs)
-        others.pop(0)
-        trimmed = kept_sys + others
-    return trimmed
-
-
-def reload_knowledge_in_place():
-    global knowledge, history
-    if not RAG_ENABLED:
-        log("RAG disabled; skipping reload.")
-        return
-    new_k = load_knowledge()
-    if not new_k:
-        log("WARNING: Reload produced empty knowledge; keeping previous.")
-        return
-    knowledge = new_k
-    if MODE == "remote":
-        # Soft refresh: append a system note + (optionally) the new knowledge block
-        note = {
-            "role": "system",
-            "content": f"[Knowledge refreshed @ {genesis_stamp()['utc_z']}]"
-        }
-        if SEPARATE_SYSTEM:
-            history.append(note)
-            history.append({"role": "system", "content": knowledge})
-        else:
-            history.append({"role": "system", "content": note["content"] + "\n\n" + knowledge})
-        log("Knowledge reloaded and appended to context. Use ::reset for a clean slate.")
-    else:
-        # local: prepend is expensive; we append a marker and continue
-        marker = f"\n[Knowledge refreshed @ {genesis_stamp()['utc_z']}]\n"
-        history += marker + knowledge + "\n"
-        log("Knowledge reloaded and appended to local prefix.")
-
-
 # === LOOP ===
 while True:
     try:
-        user_input = input(f"{CYAN}{identity['user']}:{RESET} ").strip()
+        prompt = f"{CYAN}{identity['user']}:{RESET} "
+        user_input = input(prompt).strip()
     except (EOFError, KeyboardInterrupt):
         print(f"\n{GREEN}Skybase: Shutting down.{RESET}")
         break
@@ -281,25 +224,15 @@ while True:
         print(f"{GREEN}Skybase: Shutting down.{RESET}")
         break
 
-    if user_input.lower() == HELP_COMMAND:
+    if user_input.lower() == RAG_STATUS_COMMAND:
         print(
-            f"{YELLOW}Commands:{RESET}\n"
-            "  ::help   → show this help\n"
-            "  ::sync   → git pull + reload knowledge (soft)\n"
-            "  ::reset  → clear chat and re-inject system + knowledge (hard)\n"
-            "  ::rag    → show RAG status\n"
-            "  ::id     → show identity banner\n"
-            "  ::exit   → quit\n"
+            f"[skybase] RAG status: sys_instructions={'yes' if bool(system_instructions) else 'no'}, "
+            f"psalms={len(knowledge_files)} files"
         )
         continue
 
     if user_input.lower() == ID_COMMAND:
         print(identity_banner())
-        continue
-
-    if user_input.lower() == RAG_STATUS_COMMAND:
-        klen = len(knowledge) if knowledge else 0
-        print(f"{YELLOW}RAG status:{RESET} enabled={RAG_ENABLED}, chars={klen}, separate_system={SEPARATE_SYSTEM}")
         continue
 
     if user_input.lower() == SYNC_COMMAND:
@@ -308,47 +241,45 @@ while True:
             git_sync.git_pull()
         except Exception as e:
             log(f"WARNING: git sync failed: {e}")
-        reload_knowledge_in_place()
-        print(f"{GREEN}Skybase: Sync complete.{RESET}")
-        # Trim if needed after sync
+        # reload sources + rebuild
+        system_instructions = load_system_instructions()
+        knowledge_text, knowledge_files = load_knowledge()
         if MODE == "remote":
-            history = trim_history(history)
+            history = build_system_messages()
+        else:
+            preface = "\n\n".join(m["content"] for m in build_system_messages())
+            history_str = preface + ("\n" if preface else "")
+        print(f"{GREEN}Skybase: Sync complete.{RESET}")
         continue
 
     if user_input.lower() == RESET_COMMAND:
         print(f"{CYAN}Skybase: Hard reset...{RESET}")
-        # Rebuild system messages from scratch
-        if MODE == "local":
-            pre_msgs = build_system_messages()
-            system_prefix = "\n\n".join(m["content"] for m in pre_msgs)
-            history = system_prefix + ("\n" if system_prefix else "")
-        else:
+        if MODE == "remote":
             history = build_system_messages()
+        else:
+            preface = "\n\n".join(m["content"] for m in build_system_messages())
+            history_str = preface + ("\n" if preface else "")
         print(f"{GREEN}Skybase: Context reset.{RESET}")
         continue
 
     # === GENERATION ===
     if MODE == "local":
-        prompt = history + f"\n{identity['user']}: {user_input}\n{identity['ai']}:"
+        prompt_text = history_str + f"\n{identity['user']}: {user_input}\n{identity['ai']}:"
         try:
             response = chatbot(
-                prompt,
+                prompt_text,
                 max_new_tokens=200,
                 do_sample=True,
                 temperature=TEMP,
             )[0]["generated_text"]
-            reply = response[len(prompt):].strip()
+            reply = response[len(prompt_text):].strip()
         except Exception as e:
             reply = f"[Skybase ERROR] local generation failed: {e}"
         print(f"{GREEN}{identity['ai']}:{RESET}", reply)
-        history += f"\n{identity['user']}: {user_input}\n{identity['ai']}: {reply}"
-        # Truncate local buffer if huge
-        if len(history) > MAX_CHARS:
-            history = history[-MAX_CHARS:]
+        history_str += f"\n{identity['user']}: {user_input}\n{identity['ai']}: {reply}"
 
     else:  # remote
         history.append({"role": "user", "content": user_input})
-        history = trim_history(history)
         try:
             completion = client.chat.completions.create(
                 model=MODEL_NAME,
@@ -361,4 +292,3 @@ while True:
             reply = f"[Skybase ERROR] remote completion failed: {e}"
         print(f"{GREEN}{identity['ai']}:{RESET}", reply)
         history.append({"role": "assistant", "content": reply})
-        history = trim_history(history)
