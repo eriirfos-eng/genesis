@@ -78,6 +78,15 @@ identity = {
     "ai": "Albert",
     "genesis_stamp": _ts["utc_z"],
 }
+# === LOAD SYSTEM INSTRUCTIONS ===
+sys_instr_path = Path.home() / "Desktop/skybase-runtime/system_instructions.txt"
+if sys_instr_path.exists():
+    with open(sys_instr_path, "r", encoding="utf-8") as f:
+        system_instructions = f.read().strip()
+    log("[skybase] system_instructions.txt loaded.")
+else:
+    system_instructions = ""
+    log("[skybase] WARNING: system_instructions.txt not found.")
 
 log(
     f"Genesis inception stamped @ {_ts['utc_z']} "
