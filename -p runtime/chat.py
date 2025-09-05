@@ -14,7 +14,7 @@ git_sync.git_pull()
 EXIT_COMMANDS = ["::exit", "::quit", "::bye"]
 
 MODE = os.environ.get("SKYBASE_MODE", "remote")  # default: remote
-hf_token = os.environ.get("HF_TOKEN")
+hf_token = os.environ.get("HF_TOKEN"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)
 
 # === COLORS ===
 GREEN = "\033[92m"
