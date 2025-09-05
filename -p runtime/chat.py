@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from albert_rag import load_knowledge, prepare_context
 import os
 import sys
 import datetime
@@ -57,9 +58,45 @@ SYNC_COMMAND = "::sync"
 GREEN = "\033[92m"
 CYAN = "\033[96m"
 RESET = "\033[0m"
+knowledge = load_knowledge()
+
+if MODE == "local":
+    history = prepare_context(knowledge, "local")
+    ...
+elif MODE == "remote":
+    history = prepare_context(knowledge, "remote")
+    ...
 
 # === INIT GIT SYNC ===
 git_sync.git_pull()
+# === KNOWLEDGE / RAG LOAD ===
+def load_knowledge(base_dir="knowledge"):
+    """
+    Loads psalms + system_instructions.txt into a dict.
+    """
+    kb = {}
+    base = Path(__file__).parent / base_dir
+
+    # load system instructions
+    sys_file = Path(__file__).parent / "system_instructions.txt"
+    if sys_file.exists():
+        kb["system_instructions"] = sys_file.read_text(encoding="utf-8")
+        log("system_instructions.txt loaded.")
+    else:
+        log("WARNING: system_instructions.txt not found.")
+
+    # load knowledge folder
+    if base.exists():
+        for f in base.rglob("*.md"):
+            kb[f.stem] = f.read_text(encoding="utf-8")
+        log(f"Knowledge base loaded: {len(kb)-1} psalm files.")
+    else:
+        log("WARNING: knowledge folder not found.")
+
+    return kb
+
+knowledge_base = load_knowledge()
+
 
 # === INIT MODEL ===
 if MODE == "local":
