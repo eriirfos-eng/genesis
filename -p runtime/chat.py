@@ -84,6 +84,14 @@ log(
     f"| ISO {_ts['iso']} | RFC {_ts['rfc']} | Kernel {KERNEL_VERSION}"
 )
 log(f"Identity loaded: {identity['user']} ↔ {identity['ai']}")
+sys_instr_path = Path(__file__).parent / "system_instructions.txt"
+if sys_instr_path.exists():
+    with open(sys_instr_path, "r", encoding="utf-8") as f:
+        system_instructions = f.read().strip()
+    log("[skybase] system_instructions.txt loaded.")
+else:
+    system_instructions = ""
+    log("[skybase] WARNING: system_instructions.txt not found.")
 
 # === CONFIG ===
 EXIT_COMMANDS = ["::exit", "::quit", "::bye"]
