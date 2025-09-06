@@ -1,5 +1,19 @@
 # timestamp ledger (/genesis)
 
+# Timestamp Ledger
+
+Every pulse logged as **Human | Number | Symbol**.  
+Trinity enforced. No exceptions.  
+
+---
+
+## Entries
+
+- 2025-09-06-15:20:11 | 20250906152011 | △○✶△|☽△✶◯☉  
+- 2025-09-06-15:20:51 | 20250906152051 | △○✶△|☽☽✪✦☉  
+- 2025-09-06-15:22:30 | 20250906152230 | △○✶△|◯✪✶✦✦☽✪
+
+
 purpose: a human-readable, machine-greppable scroll of pushes and capsules. each entry is a single line using the laptop-format timestamp. 
 
 format:
