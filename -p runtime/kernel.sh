@@ -36,6 +36,7 @@ print(tokenizer.decode(outputs[0][inputs["input_ids"].shape[-1]:]))
 import os
 import sys
 import datetime
+import knowledge
 from pathlib import Path
 from email.utils import format_datetime
 from dotenv import load_dotenv
