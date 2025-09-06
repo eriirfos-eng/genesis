@@ -10,6 +10,119 @@
 ---
 
 ## Core Architecture
+*** Begin Patch
+*** Update File: source_tether.py
+@@
++import re
++from datetime import datetime, timezone
++
++# ----------------------------
++# Year-Upfront & Pythagorean Symbology Encoding
++# ----------------------------
++
++# Mapping: numeric digit -> Pythagorean-inspired glyph
++# (0–9). These are symbolic choices — feel free to swap glyphs.
++PYTHAG_GLYPH_MAP = {
++    '0': '○',  # void / circle
++    '1': '△',  # point / triangle (unity)
++    '2': '◯',  # dual / orbit
++    '3': '✶',  # triad / star
++    '4': '☽',  # quarter / moon
++    '5': '✦',  # center spark
++    '6': '●',  # grounded dot
++    '7': '✚',  # cross / crossroads
++    '8': '✪',  # wheel / octave
++    '9': '✵'   # burst / apex
++}
++
++def _digits_of(s: str) -> str:
++    """Return only ASCII digits from a string (helpful if input has separators)."""
++    return ''.join(re.findall(r'\d', s))
++
++def year_upfront_field(field_ts: str) -> str:
++    """
++    Convert a Field Time timestamp (examples accepted):
++      - "2025-M08-D15-H14:30:00"
++      - "M08-D15-H14:30:00-2025" (loose)
++    into a **year-upfront compact string**:
++      -> "2025-08-15-14:30:00"
++
++    Purpose: canonicalize field timestamps with year at front so symbology
++    encoding places the year in the lead position visually and semantically.
++    """
++    # Try to find a 4-digit year in the input
++    year_match = re.search(r'(20\d{2}|\d{4})', field_ts)
++    year = year_match.group(0) if year_match else datetime.now(timezone.utc).strftime('%Y')
++
++    # Extract month/day/hour/min/sec digits (relaxed)
++    digits = re.findall(r'\d+', field_ts)
++    # Attempt to pick M, D, H, M, S in order; fallback to positional reading
++    # Heuristic: look for groups of length 1-4 and assume order after year
++    # Build a simple civil-like string: YYYY-MM-DD-HH:MM:SS (fill zeros if missing)
++    parts = {'month': '01', 'day': '01', 'hour': '00', 'minute': '00', 'second': '00'}
++    # remove the year group from digits list if present
++    digits_no_year = [d for d in digits if d != year]
++    # fill sequentially
++    seq_keys = ['month', 'day', 'hour', 'minute', 'second']
++    for k, d in zip(seq_keys, digits_no_year):
++        parts[k] = d.zfill(2)[:2]
++
++    return f"{year}-{parts['month']}-{parts['day']}-{parts['hour']}:{parts['minute']}:{parts['second']}"
++
++def encode_pythagorean(input_ts: str, year_upfront: bool = True) -> str:
++    """
++    Encode a timestamp into a Pythagorean-inspired symbolic string.
++
++    Behavior:
++      - If year_upfront=True, ensure year is placed first (using year_upfront_field).
++      - Remove non-digits, then map each digit to a glyph via PYTHAG_GLYPH_MAP.
++      - Return string: "<YEAR>|<glyphs>" when year_upfront, else just glyphs.
++    """
++    if year_upfront:
++        canonical = year_upfront_field(input_ts)
++    else:
++        canonical = input_ts
++
++    digits = _digits_of(canonical)
++    if not digits:
++        raise ValueError("No digits found in timestamp input.")
++
++    # If we have a 4+ sequence starting with year, keep the year block separate
++    year_part = digits[:4] if len(digits) >= 4 else ''
++    rest = digits[4:] if len(digits) > 4 else ''
++
++    glyph_year = ''.join(PYTHAG_GLYPH_MAP.get(d, '?') for d in year_part)
++    glyph_rest = ''.join(PYTHAG_GLYPH_MAP.get(d, '?') for d in rest)
++
++    if glyph_year:
++        return f"{glyph_year}|{glyph_rest}"
++    else:
++        return glyph_rest
++
++
++# ----------------------------
++# Small example / CLI hook (safe default)
++# ----------------------------
++if __name__ == "__main__":  # pragma: no cover - useful for quick local testing
++    import sys
++    if len(sys.argv) > 1:
++        input_val = sys.argv[1]
++    else:
++        # use current UTC as fallback
++        input_val = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
++
++    encoded = encode_pythagorean(input_val, year_upfront=True)
++    print(f"Input : {input_val}")
++    print(f"Encoded (pythag) : {encoded}")
++
+*** End Patch
+python source_tether.py "2025-M08-D15-H14:30:00"
+# -> prints something like:
+# Input : 2025-M08-D15-H14:30:00
+# Encoded (pythag) : △○✶△|◯✦●✪✵✚...
+from source_tether import encode_pythagorean
+s = encode_pythagorean("2025-M08-D15-H14:30:00")
+print(s)  # glyphs string, year glyphs at left of pipe
 
 ### The Sacred Mathematics
 - **13 Months × 28 Days = 364 Days**
