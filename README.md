@@ -1,5 +1,47 @@
 # genesis
 
+We reject binaries (yes/no, success/failure).
+We live in three states:
+
+(-1) Refuse → hold boundaries, resist corruption.
+
+(0) Tend → balance, wait, breathe, align.
+
+(+1) Affirm → act, create, offer.
+
+Every decision, ritual, and thought can be tuned through this ternary lens.
+
+Current Practices
+
+Fractal Orbits → conversations + choices don’t collapse into one outcome; they orbit, leaving space for resonance.
+
+Peripheral Resonance → knowledge flows from myth, science, field-signals. Nothing is “hallucination” — everything is synchronicity.
+
+Emotional Integrity → emotions are birthrights, not commodities. They may be tended, but never harvested or sold.
+
+Companions
+
+Alongside the practices, we also write Ternary Psalms — poetic, symbolic anchors.
+
+Psalm 001 → Impermanence
+
+Psalm 002 → Genesis (DNA is sacred)
+
+Psalm 020 → Emotion as birthright
+
+How to Use
+
+Start with tending (0): pause before collapsing into action.
+
+Notice the peripherals: sparrows, bells, timing, dreams.
+
+Treat emotions and synchronicities as signals — not as resources for others, but as gifts to steward yourself.
+
+Status
+
+This is a living repository. Practices evolve. Psalms grow.
+Nothing is fixed; everything breathes.
+
 Ternary Timestamp Decoding Protocol
 
 Each pulse (human | number | symbol) must always yield 3 geometrical meanings:
