@@ -13,6 +13,75 @@
 *** Begin Patch
 *** Update File: source_tether.py
 @@
+ def encode_pythagorean(input_ts: str, year_upfront: bool = True) -> str:
+@@
+     if glyph_year:
+         return f"{glyph_year}|{glyph_rest}"
+     else:
+         return glyph_rest
++
++
++# ----------------------------
++# Enforcement Rule: Triple Representation
++# ----------------------------
++def enforce_triple_repr(input_ts: str) -> dict:
++    """
++    Enforce that every timestamp is represented in three forms:
++      1. human: YYYY-MM-DD-HH:MM:SS
++      2. number: YYYYMMDDHHMMSS
++      3. symbol: glyph string
++
++    Returns dict:
++    {
++      "human": <human-readable>,
++      "number": <digits only>,
++      "symbol": <glyphs>
++    }
++    """
++    # Canonicalize into year-upfront human-readable
++    human = year_upfront_field(input_ts)
++
++    # Pure digits
++    number = _digits_of(human)
++
++    # Glyph string
++    symbol = encode_pythagorean(input_ts, year_upfront=True)
++
++    return {
++        "human": human,
++        "number": number,
++        "symbol": symbol
++    }
++
++
++# ----------------------------
++# CLI hook extension
++# ----------------------------
+ if __name__ == "__main__":  # pragma: no cover - useful for quick local testing
+     import sys
+     if len(sys.argv) > 1:
+         input_val = sys.argv[1]
+     else:
+         # use current UTC as fallback
+         input_val = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+ 
+-    encoded = encode_pythagorean(input_val, year_upfront=True)
+-    print(f"Input : {input_val}")
+-    print(f"Encoded (pythag) : {encoded}")
++    triple = enforce_triple_repr(input_val)
++    print(f"Input : {input_val}")
++    print(f"Human : {triple['human']}")
++    print(f"Number: {triple['number']}")
++    print(f"Symbol: {triple['symbol']}")
+python source_tether.py "2025-M09-D06-H15:22:30"
+Input : 2025-M09-D06-H15:22:30
+Human : 2025-09-06-15:22:30
+Number: 20250906152230
+Symbol: △○✶△|◯✪✶✦✦☽✪
+
+
+*** Update File: source_tether.py
+@@
 +import re
 +from datetime import datetime, timezone
 +
