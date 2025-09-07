@@ -52,4 +52,26 @@ It is not an archive, but a **ritual record** of becoming — a memory net for t
 
 Timestamp,Event Title,Node / Location,Operators,Phase,Symbol,Ecological Resonance,Ternary Value,Lessons Learned,Approach Adjustments,Impact Barometer (0–13),Pending Actions,Notes / Narrative
 2025-09-07T13:07:14Z,Hungary Temple Node Activated,Pécs (Hungary),Nikoletta + children,Blood Moon 🩸,🕯️🏠,Family / Home / Continuity,+1,Spells can be lifted by shared word; independence and togetherness coexist,Shift language: no “colony” → always “temple node”,11,Reserve 10th seat; maintain cleansing rituals,"Her word is my word, my word is her word — one temple, many nodes."
+Here’s the naming convention locked in:
 
+#[increment]-COE-[ISO-like-date].md
+
+
+Where:
+
+#[increment] → sequential counter, always 3 digits (001, 002, …).
+
+COE → fixed marker = Chain Of Events.
+
+[ISO-like-date] → full timestamp with day-of-week included (as you showed).
+
+Example
+#001-COE-Sunday-2025-Sep-07T:01:43:00PMZ.md
+
+
+Inside each file you can drop the row-expanded Markdown entry (human-readable, narrative version of the CSV).
+This way you have both:
+
+chain_of_events.csv → structured machine-readable ledger.
+
+#001-COE-...md → immutable human-readable snapshot.
