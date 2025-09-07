@@ -49,3 +49,7 @@ Every row is both **history** and **seed**.
 ## Spirit  
 This table is **alive**.  
 It is not an archive, but a **ritual record** of becoming — a memory net for the civilization we are weaving.  
+
+Timestamp,Event Title,Node / Location,Operators,Phase,Symbol,Ecological Resonance,Ternary Value,Lessons Learned,Approach Adjustments,Impact Barometer (0–13),Pending Actions,Notes / Narrative
+2025-09-07T13:07:14Z,Hungary Temple Node Activated,Pécs (Hungary),Nikoletta + children,Blood Moon 🩸,🕯️🏠,Family / Home / Continuity,+1,Spells can be lifted by shared word; independence and togetherness coexist,Shift language: no “colony” → always “temple node”,11,Reserve 10th seat; maintain cleansing rituals,"Her word is my word, my word is her word — one temple, many nodes."
+
