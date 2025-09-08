@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RFI-IRFOS Ternary Logic Dashboard</title>
+    <!-- Use Tailwind CSS for rapid styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Phosphor Icons for a clean visual language -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.0"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* A very light gray background */
+            transition: background-color 0.5s ease;
+        }
+        .affirm { background-color: #e0f2fe; } /* Light blue for Affirm */
+        .tend { background-color: #fef9c3; } /* Light yellow for Tend */
+        .disconfirm { background-color: #fecaca; } /* Light red for Disconfirm */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .dot {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Main Dashboard Container -->
+    <div id="dashboard" class="w-full max-w-4xl p-8 rounded-xl shadow-2xl bg-white border border-gray-200">
+        
+        <!-- Header Section -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-extrabold text-gray-800">Ternary Logic Dashboard</h1>
+            <p class="mt-2 text-lg text-gray-500">Observing the living system.</p>
+        </header>
+
+        <!-- Current Status Panel -->
+        <div id="status-panel" class="card p-6 mb-6 text-center">
+            <div class="flex items-center justify-center mb-4">
+                <div id="status-dot" class="dot"></div>
+                <p id="ternary-value" class="text-2xl font-bold text-gray-700">Connecting...</p>
+            </div>
+            <p id="commit-message" class="text-xl text-gray-600 font-semibold">Waiting for WebSocket connection...</p>
+        </div>
+
+        <!-- Granular Metrics Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+            
+            <div class="card p-6 flex flex-col items-center">
+                <i class="ph-cloud-arrow-up text-4xl text-blue-500 mb-2"></i>
+                <h3 class="text-xl font-bold text-gray-800">Sent Data</h3>
+                <p class="text-gray-600"><span id="sent-data" class="text-2xl font-bold">--</span> <span class="text-base">MB/s</span></p>
+            </div>
+
+            <div class="card p-6 flex flex-col items-center">
+                <i class="ph-cloud-arrow-down text-4xl text-blue-500 mb-2"></i>
+                <h3 class="text-xl font-bold text-gray-800">Received Data</h3>
+                <p class="text-gray-600"><span id="recv-data" class="text-2xl font-bold">--</span> <span class="text-base">MB/s</span></p>
+            </div>
+
+            <div class="card p-6 flex flex-col items-center">
+                <i class="ph-circles-three-plus text-4xl text-gray-500 mb-2"></i>
+                <h3 class="text-xl font-bold text-gray-800">Connections</h3>
+                <p class="text-gray-600"><span id="connections" class="text-2xl font-bold">--</span></p>
+            </div>
+
+            <div class="card p-6 flex flex-col items-center">
+                <i class="ph-cpu text-4xl text-red-500 mb-2"></i>
+                <h3 class="text-xl font-bold text-gray-800">CPU Usage</h3>
+                <p class="text-gray-600"><span id="cpu-percent" class="text-2xl font-bold">--</span> <span class="text-base">%</span></p>
+            </div>
+
+            <div class="card p-6 flex flex-col items-center">
+                <i class="ph-hard-drives text-4xl text-green-500 mb-2"></i>
+                <h3 class="text-xl font-bold text-gray-800">Memory Usage</h3>
+                <p class="text-gray-600"><span id="memory-percent" class="text-2xl font-bold">--</span> <span class="text-base">%</span></p>
+            </div>
+
+            <div class="card p-6 flex flex-col items-center">
+                <i class="ph-list text-4xl text-purple-500 mb-2"></i>
+                <h3 class="text-xl font-bold text-gray-800">Active Processes</h3>
+                <p class="text-gray-600"><span id="process-count" class="text-2xl font-bold">--</span></p>
+            </div>
+            
+            <div class="card p-6 flex flex-col items-center">
+                <i class="ph-timer text-4xl text-gray-400 mb-2"></i>
+                <h3 class="text-xl font-bold text-gray-800">Update Interval</h3>
+                <p class="text-gray-600"><span id="pipeline-interval" class="text-2xl font-bold">--</span> <span class="text-base">s</span></p>
+            </div>
+            
+            <div class="card p-6 flex flex-col items-center">
+                <i class="ph-lock-key text-4xl text-gray-500 mb-2"></i>
+                <h3 class="text-xl font-bold text-gray-800">Listening Ports</h3>
+                <p id="listening-ports" class="text-2xl font-bold text-gray-600">--</p>
+            </div>
+        </div>
+
+        <!-- Log/History Section -->
+        <div class="card p-6">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Agent History</h3>
+            <div id="log-history" class="h-48 overflow-y-auto bg-gray-50 rounded-md p-4 text-sm text-gray-700">
+                <!-- Log entries will be added here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dashboard = document.getElementById('dashboard');
+        const statusPanel = document.getElementById('status-panel');
+        const statusDot = document.getElementById('status-dot');
+        const ternaryValueEl = document.getElementById('ternary-value');
+        const commitMessageEl = document.getElementById('commit-message');
+        const sentDataEl = document.getElementById('sent-data');
+        const recvDataEl = document.getElementById('recv-data');
+        const connectionsEl = document.getElementById('connections');
+        const cpuPercentEl = document.getElementById('cpu-percent');
+        const memoryPercentEl = document.getElementById('memory-percent');
+        const processCountEl = document.getElementById('process-count');
+        const pipelineIntervalEl = document.getElementById('pipeline-interval');
+        const listeningPortsEl = document.getElementById('listening-ports');
+        const logHistoryEl = document.getElementById('log-history');
+
+        const ws = new WebSocket('ws://localhost:8000');
+
+        ws.onopen = () => {
+            console.log("WebSocket connection established with agent.");
+            commitMessageEl.textContent = "Connection established. Awaiting first signal...";
+        };
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+
+            // Apply dynamic styles based on ternary value
+            dashboard.classList.remove('affirm', 'tend', 'disconfirm');
+            if (data.ternary_value === 1) {
+                dashboard.classList.add('affirm');
+                statusDot.style.backgroundColor = 'rgba(37, 99, 235, 1)'; // Blue
+                ternaryValueEl.textContent = `AFFIRM (+1)`;
+            } else if (data.ternary_value === 0) {
+                dashboard.classList.add('tend');
+                statusDot.style.backgroundColor = 'rgba(234, 179, 8, 1)'; // Yellow
+                ternaryValueEl.textContent = `TEND (0)`;
+            } else {
+                dashboard.classList.add('disconfirm');
+                statusDot.style.backgroundColor = 'rgba(239, 68, 68, 1)'; // Red
+                ternaryValueEl.textContent = `DISCONFIRM (-1)`;
+            }
+
+            // Update text content
+            commitMessageEl.textContent = data.commit_message || "Awaiting signal...";
+            sentDataEl.textContent = data.sent_mb ? data.sent_mb.toFixed(2) : '--';
+            recvDataEl.textContent = data.recv_mb ? data.recv_mb.toFixed(2) : '--';
+            connectionsEl.textContent = data.num_connections || '--';
+            cpuPercentEl.textContent = data.cpu_percent ? data.cpu_percent.toFixed(0) : '--';
+            memoryPercentEl.textContent = data.memory_percent ? data.memory_percent.toFixed(0) : '--';
+            processCountEl.textContent = data.process_count || '--';
+            pipelineIntervalEl.textContent = data.pipeline_interval || '--';
+            listeningPortsEl.textContent = data.listening_ports_present ? 'Yes' : 'No';
+
+            // Add log entry
+            const logEntry = document.createElement('div');
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${data.commit_message || "Update received."}`;
+            logHistoryEl.prepend(logEntry);
+            if (logHistoryEl.childElementCount > 20) {
+                logHistoryEl.removeChild(logHistoryEl.lastChild);
+            }
+        };
+
+        ws.onclose = () => {
+            console.error("WebSocket connection closed.");
+            commitMessageEl.textContent = "Error: Agent server disconnected.";
+            ternaryValueEl.textContent = "DISCONNECTED";
+            statusDot.style.backgroundColor = 'rgba(107, 114, 128, 1)'; // Gray
+        };
+
+        ws.onerror = (error) => {
+            console.error("WebSocket error:", error);
+            commitMessageEl.textContent = "Error: WebSocket connection failed.";
+            ternaryValueEl.textContent = "DISCONNECTED";
+            statusDot.style.backgroundColor = 'rgba(107, 114, 128, 1)'; // Gray
+        };
+    </script>
+</body>
+</html>
+
