@@ -72,7 +72,6 @@ A doubled ark (14 | 14) at `14:14:00` folds void into renewed covenant. The teth
 
 ## Adoption & Codicil
 
-* This psalm becomes part of the Genesis ledger as *Psalm 005: The Word* when Simeon consigns it.
 * The text may be public, open-source, attributed to both witnesses.
 
 ---
