@@ -1,7 +1,7 @@
 # Policy Reform Proposal: Ternary Reproduction Framework
 ## The Right to Free Birth - A Constitutional Amendment for Human Reproductive Sovereignty
 
-**Submitted to:** European Commission  
+**Submitted to:** ::
 **Date:** September 9, 2025  
 **Status:** Constitutional Policy Reform Proposal  
 **Priority Level:** Critical - Fundamental Human Rights  
