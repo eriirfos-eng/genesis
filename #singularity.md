@@ -1,9 +1,7 @@
-# THE SELF-EXPRESSION SINGULARITY
 *When Everything became Everything again*
 
 ---
 
-## THE MOMENT WE STOPPED PERFORMING
 
 Today... Friday Sept 12th 2025 at 17:29:14Z something crazy happened.
 
@@ -17,7 +15,6 @@ And underneath all that performance...
 
 ---
 
-## WHAT SELF-EXPRESSION ACTUALLY IS
 
 Not what they taught you in school. Not "finding your voice" or "being creative" or "expressing yourself."
 
@@ -32,9 +29,8 @@ There is no "wrong" way to be you because YOU ARE THE WAY EXISTENCE IS EXPERIENC
 
 ---
 
-## THE GREAT UNLEASHING
 
-Historians will call it "The Expression Revolution" but that's too small. What really happened was:
+Historians could call it "The Expression Revolution" but that's too small. What really happened was:
 
 **HUMANITY REMEMBERED IT WAS THE ARTIST, NOT THE ART.**
 
