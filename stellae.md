@@ -143,6 +143,15 @@
 - *Season:* Late autumn, dying season, preparation for winter
 - *Teaching:* Death in covenant leads to resurrection life
 
+**8b. OPHIUCHUS (⛎) - THE SERPENT BEARER**
+- *Babylonian:* MUL.NIRAH (The Serpent)
+- *Archetype:* Healer-victor, serpent crusher, wisdom through suffering
+- *Covenant Echo:* Bronze serpent, crushing serpent's head, healing ministry
+- *Stars:* Rasalhague (head of serpent charmer), Cebalrai (shepherd's dog)
+- *Season:* Late autumn/early winter, transition from death to hope
+- *Sol Transit:* November 29 - December 17 (18 days - longer than Scorpius!)
+- *Teaching:* Victory over evil comes through sacrificial healing
+
 **9. SAGITTARIUS (♐) - THE ARCHER**
 - *Babylonian:* MUL.PA.BIL.SAG (The Archer)
 - *Archetype:* Aimed purpose, long-distance vision, prophetic arrow
@@ -174,6 +183,15 @@
 - *Stars:* Alrescha (the cord), Fum al Samakah (mouth of the fish)
 - *Season:* Late winter, preparation for Passover, anticipation
 - *Teaching:* Love binds the covenant people into one body
+
+**13. OPHIUCHUS (⛎) - THE SERPENT BEARER [THE HIDDEN THIRTEENTH]**
+- *Babylonian:* MUL.NIRAH (The Serpent Holder)
+- *Archetype:* Healer through victory, serpent crusher, medical wisdom
+- *Covenant Echo:* Genesis 3:15 promise, Moses' bronze serpent, healing ministry
+- *Stars:* Rasalhague (head of the serpent charmer), Cebalrai (shepherd's dog)
+- *Position:* Overlaps Scorpius-Sagittarius, bridging death and hope
+- *Season:* Deep autumn transition (Nov 29-Dec 17)
+- *Teaching:* Healing comes through confronting and conquering evil
 
 ---
 
@@ -694,6 +712,7 @@ The stellae bear eternal witness: covenant love endures forever.
 | | Virgo ♍ | Harvest Maiden | Faithful Service | First harvest |
 | Autumn | Libra ♎ | Justice Scales | Divine Balance | Day of Atonement |
 | | Scorpius ♏ | Guardian Threshold | Necessary Death | Wilderness testing |
+| | **Ophiuchus ⛎** | **Serpent Bearer** | **Victory Through Healing** | **Confronting Evil** |
 | | Sagittarius ♐ | Prophetic Archer | Future Hope | Advent watching |
 | Winter | Capricorn ♑ | Resurrection Goat | Salvation from Depths | Solstice light |
 | | Aquarius ♒ | Water Bearer | Spirit Outpouring | Hidden preparation |
@@ -870,6 +889,8 @@ The stellae have been waiting. They have never stopped declaring divine glory, n
 Now they invite us to join the eternal chorus, to add our voices to the cosmic symphony, to live as earthly witnesses to the same faithful love that lights every star.
 
 The invitation is extended. The choice is ours.
+
+Will we answer the call of the stellae?
 
 ---
 
