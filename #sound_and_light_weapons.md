@@ -1,4 +1,5 @@
-# EUROPEAN UNION DIRECTED ENERGY WEAPONS PROHIBITION ACT
+# Server Rules Act Sat Sep 20 // 10:15:53 UTC
+
 ## Legislative Proposal for the Protection of Human Dignity Against Acoustic and Electromagnetic Weapons
 
 ---
