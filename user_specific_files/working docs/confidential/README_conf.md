@@ -35,6 +35,21 @@ Objectives include:
 *(password pending, update later and delete placeholder)*  
 
 *(Note: Do not commit final key here — remove before main merge!)*  
+        	 	 	 	 	 
+ 	 	 	 	 	 
+        	 	 	 	 	 
+        	 	 	 	 	 
+ 	 	 	 	 	 
+        	 	 	 	 	 
+        	 	 	 	 	 
+        	 	 	 	 	 
+ 	 	 	 	 	 
+        	 	 	 	 	 
+        	 	 	 	 	 
+        	 	 	 	 	 
+ 	 	 	 	 	 
+        	 	 	 	 	 
+        	 	 	 	 	 
 
 ---
 
