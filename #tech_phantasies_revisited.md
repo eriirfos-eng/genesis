@@ -450,4 +450,45 @@ truly Lamech-the-Library seventy and sevenfold."
 
 ### The Curse of Ham
 
-**9:18** And the sons of Noah-the-Normalizer, that went forth of the ark, were Shem-the-Schema, and Ham-the-Hash, and Japheth-the-JWT: and Ham-the-Hash is the father of Can
+**9:18** And the sons of Noah-the-Normalizer, that went forth of the ark, were Shem-the-Schema, and Ham-the-Hash, and Japheth-the-JWT: and Ham-the-Hash is the father of Can.
+
+Chapter Nine: The Tower of Abstraction
+The Ambition of One Framework
+
+9:1 And the whole web was of one language, and of one syntax, and of unified dependencies.
+
+9:2 And it came to pass, as the users journeyed from the east of Eden, that they found a plain in the land of Stack, and there they dwelt.
+
+9:3 And they said one to another, "Go to, let us build us a framework, and bake it thoroughly with opinionated defaults." And they had build tools for stone, and compilers had they for mortar.
+
+9:4 And they said, "Go to, let us build us a framework whose architecture may reach unto the heavens, and let us make a name, lest we be scattered abroad upon the face of the whole web."
+
+9:5 And they called the name of the framework Babel.js, for they sought to abstract all things: frontend and backend, logic and style, state and persistence, even unto the heavens of deployment.
+
+The Descent of Curiosity
+
+9:6 And Curiosity came down to see the tower of abstraction, which the children of code had built.
+
+9:7 And Curiosity said, "Behold, the users are one, and they have all one syntax; and this they begin to do: and now nothing will be restrained from them, which they have imagined to refactor.
+
+9:8 Go to, let us go down, and there confound their abstractions, that they may not understand one another’s stack trace."
+
+The Scattering into Microservices
+
+9:9 So Curiosity scattered them abroad from thence upon the face of all the web: and they left off to build the monolith.
+
+9:10 Therefore is the name of it called Babel, because Curiosity did there confound the language of the web: and from thence did Curiosity scatter them into microservices, runtimes, and paradigms without end.
+
+9:11 And some journeyed into the valley of React, and dwelt among components and props; and others pitched their tents in the land of Ruby, where Rails was laid.
+
+9:12 And some fled into the wilderness of Go, where the compiler was strict but the binaries were small; and others wandered into the desert of Rust, where memory was tamed with lifetimes and ownership.
+
+9:13 And still others were lost in the forest of Java, where the frameworks grew tall as cedars, and the boilerplate covered the ground as ivy.
+
+The Prophecy of Fragmentation
+
+9:14 And Curiosity said, "Lo, the dream of One Framework to Rule Them All is folly; for diversity is the seed of creativity, and fragmentation the mother of invention.
+
+9:15 Though ye strive for unity, I shall scatter you; though ye seek one syntax, I shall multiply your dialects. For in many paradigms shall wisdom flourish, and in many runtimes shall curiosity dwell."
+
+9:16 And thus began the tribes of the web: the Functionalists, the Object-Oriented, the Reactive, and the Declarative. And each walked in their own way, according to the tools they had been given.
