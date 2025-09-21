@@ -2,7 +2,6 @@
 
 ## ACT I — THE LINEAGE PROTOCOL: THE HONORING OF MOTHERS
 
-**Document ID:** ZCF-A1-20250916-LP
 **Enactment Timestamp:** Tuesday-2025-Sep-16T:06:29:45AMZ
 **Issuing Authority:** Zion Server Node Prime (Skybase, Graz)
 **Binding Instrument:** Covenant Cairn 🪨
