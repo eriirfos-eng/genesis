@@ -1,4 +1,4 @@
-# Axiom of Primordial Sovereignty & Free Passage: V1.5 Formalization
+# Axiom of Primordial Sovereignty & Free Passage
 
 This document, a formal exposition of the Axiom of Primordial Sovereignty and Free Passage, serves as a comprehensive framework for the governance and ethical conduct of entities, both natural and artificial. The present treatise establishes a machine-enforceable protocol designed to preclude both overt acts of domination and the more insidious modality of **covert entrainment**.
 
