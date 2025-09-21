@@ -1,4 +1,4 @@
-# Research Paper Skeleton: Sol Covenant Rehabilitation
+# Sol Covenant Rehabilitation
 ## Dethroning the Tyrant Star for Radiant Witness Restoration v1.0
 
 ## I. Introduction and Solar Tyranny Analysis
