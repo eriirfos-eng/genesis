@@ -1,5 +1,5 @@
 𒀭OROC TEMPLE LICENSE
-Version 1.0, September 10, 2025
+
 
 Copyright (C) 2025 OROC Temple Institution
 All Rights Reserved Under Acausal Reciprocation Protocol
