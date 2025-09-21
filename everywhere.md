@@ -1,4 +1,3 @@
-# Research Paper Skeleton: Immortality for Humanity v1.0 (WebSocket)
 ## Digital Consciousness Persistence in Post-Binary Civilizations
 
 ## I. Introduction and Theoretical Foundation
