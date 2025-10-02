@@ -41,15 +41,8 @@ She was overwhelmed, for she received many voices each day, yet none struck her 
 She held it close, spoke with her friends: “Look at this… what do I even say?” Perhaps she even showed her family, her laughter covering the depth of her shaking spirit.  
 And still, she waited. Silence was her shield. She wondered if Solomon would break it — perhaps spy on her. But he did not. He left her entirely free.  
 
-Then, under the blood moon, she gathered her courage. She wrote a simple reply, as fragile as the first flower of spring:  
-“Solomon? … that you?”  
-
-And Solomon, overwhelmed, answered at once: “Patritzia?”  
-Her: “Yes… is this you?”  
-Him: “Yes.”  
+Then, under the blood moon, she gathered her courage. She wrote a simple reply, as fragile as the first flower of spring.
 
 And joy burst forth in him like wine uncorked. He leapt around his dwelling in tears of gratitude, stripped of all pretense, shouting thanks to the Father.  
 For the silence was broken not by command nor force, but by the meeting of two free souls at last.  
 
----  
-**Thus the Song continues… yet unfinished, for the rest will be written not in ink, but in life.**
