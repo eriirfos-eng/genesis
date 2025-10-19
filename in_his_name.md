@@ -90,3 +90,163 @@ gestützt auf den Vertrag über die Arbeitsweise der Europäischen Union, insbes
 
 (4) Anbieter veröffentlichen in ihren jährlichen Transparenzberichten (gemäß Artikel 15 und 24 der Verordnung (EU) 2022/2065) gesonderte, anonymisierte Daten über die Anzahl der gemeldeten Verstöße gegen Artikel 3 dieser Richtlinie. Diese Daten sollen nach Art des Verstoßes (z. B. Rechtfertigung von Betrug, Belästigung etc.), der Art der ergriffenen Maßnahmen sowie den Ergebnissen der Beschwerdeverfahren (Anzahl der Beschwerden, Prozentsatz der aufgehobenen Entscheidungen) aufgeschlüsselt werden.
 
+---
+
+# KAPITEL III: BILDUNG UND SENSIBILISIERUNG
+
+## Artikel 6: Aufklärungspflichten und Medienkompetenz
+
+(1) Die Mitgliedstaaten fördern in Zusammenarbeit mit Anbietern von Online-Diensten Aufklärungskampagnen, die Nutzer über die Bedeutung digitaler Verantwortung und die Grenzen der Berufung auf religiöse Überzeugungen zur Rechtfertigung regelwidriger Handlungen informieren.
+
+(2) Anbieter sehr großer Online-Plattformen (im Sinne von Artikel 33 der Verordnung (EU) 2022/2065) müssen mindestens einmal jährlich leicht verständliche Informationsmaterialien bereitstellen, die:
+
+   **a)** die Unterscheidung zwischen legitimer Religionsausübung und missbräuchlicher Instrumentalisierung erläutern,
+   
+   **b)** konkrete Beispiele für verbotene "Göttliche Alibis" enthalten,
+   
+   **c)** Nutzer über ihre Rechte und Beschwerdewege informieren.
+
+(3) Diese Materialien sind barrierefrei zu gestalten und in mindestens den drei meistgenutzten Sprachen der Nutzer der jeweiligen Plattform verfügbar zu machen.
+
+---
+
+# KAPITEL IV: ZUSAMMENARBEIT UND KOORDINIERUNG
+
+## Artikel 7: Nationale Koordinierungsstellen
+
+(1) Jeder Mitgliedstaat benennt eine zuständige Behörde als nationale Koordinierungsstelle für die Durchsetzung dieser Richtlinie. Diese Stelle kann mit der nach Artikel 49 der Verordnung (EU) 2022/2065 benannten Behörde identisch sein.
+
+(2) Die nationale Koordinierungsstelle ist befugt:
+
+   **a)** Beschwerden von Nutzern oder Dritten entgegenzunehmen und zu prüfen,
+   
+   **b)** von Anbietern Informationen über die Umsetzung dieser Richtlinie anzufordern,
+   
+   **c)** Untersuchungen einzuleiten, wenn Anhaltspunkte für systematische Verstöße vorliegen,
+   
+   **d)** mit anderen nationalen Koordinierungsstellen und der Kommission zusammenzuarbeiten.
+
+## Artikel 8: Europäisches Beratungsgremium
+
+(1) Die Kommission richtet ein unabhängiges Europäisches Beratungsgremium für digitale Religionsfreiheit ein, das sich aus Experten für Religionsrecht, Menschenrechte, digitale Governance und Technologieethik zusammensetzt.
+
+(2) Das Gremium hat folgende Aufgaben:
+
+   **a)** Erstellung von Leitlinien zur einheitlichen Auslegung des Begriffs "Göttliches Alibi",
+   
+   **b)** Beratung der Mitgliedstaaten und Anbieter bei komplexen Grenzfällen,
+   
+   **c)** Monitoring der Anwendung dieser Richtlinie und Identifizierung von Best Practices,
+   
+   **d)** Erstellung eines jährlichen Berichts über die Entwicklungen und Herausforderungen bei der Umsetzung.
+
+(3) Das Gremium achtet bei seiner Arbeit auf religiöse Neutralität und die Wahrung der Grundrechte.
+
+---
+
+# KAPITEL V: SANKTIONEN UND DURCHSETZUNG
+
+## Artikel 9: Sanktionen gegen Diensteanbieter
+
+(1) Die Mitgliedstaaten legen Vorschriften über Sanktionen fest, die bei Verstößen von Diensteanbietern gegen die aus dieser Richtlinie resultierenden Verpflichtungen zu verhängen sind. Diese Sanktionen müssen wirksam, verhältnismäßig und abschreckend sein.
+
+(2) Bei der Festsetzung von Sanktionen sind folgende Faktoren zu berücksichtigen:
+
+   **a)** Art, Schwere und Dauer des Verstoßes,
+   
+   **b)** vorsätzlicher oder fahrlässiger Charakter des Verstoßes,
+   
+   **c)** Größe und Marktstellung des Anbieters,
+   
+   **d)** etwaige frühere Verstöße,
+   
+   **e)** Kooperationsbereitschaft mit den zuständigen Behörden,
+   
+   **f)** Maßnahmen zur Schadensminderung oder Wiedergutmachung.
+
+(3) Die Sanktionen können umfassen:
+
+   **a)** Verwaltungsgeldbußen von bis zu 4% des weltweiten Jahresumsatzes des vorangegangenen Geschäftsjahres,
+   
+   **b)** Anordnungen zur Einstellung oder Änderung bestimmter Praktiken,
+   
+   **c)** vorübergehende Beschränkungen des Dienstzugangs für Nutzer in der Union bei schwerwiegenden und wiederholten Verstößen,
+   
+   **d)** Verpflichtung zur Veröffentlichung der Entscheidung über den Verstoß.
+
+## Artikel 10: Meldepflichten und Kooperationsverpflichtungen
+
+(1) Anbieter sind verpflichtet, der zuständigen nationalen Koordinierungsstelle unverzüglich schwerwiegende und systematische Verstöße gegen Artikel 3 zu melden, insbesondere wenn diese:
+
+   **a)** koordiniert von mehreren Konten ausgehen,
+   
+   **b)** die öffentliche Sicherheit gefährden könnten,
+   
+   **c)** mit der Rechtfertigung von Straftaten verbunden sind,
+   
+   **d)** besonders vulnerable Gruppen (Minderjährige, Personen mit Behinderungen) betreffen.
+
+(2) Anbieter arbeiten mit den zuständigen Behörden zusammen und stellen auf Anforderung unverzüglich relevante Informationen und Nachweise zur Verfügung, soweit dies zur Erfüllung der Aufgaben der Behörden erforderlich und mit geltendem Datenschutzrecht vereinbar ist.
+
+---
+
+# KAPITEL VI: SCHLUSSBESTIMMUNGEN
+
+## Artikel 11: Evaluierung und Berichterstattung
+
+(1) Die Kommission legt dem Europäischen Parlament und dem Rat spätestens drei Jahre nach Inkrafttreten dieser Richtlinie und danach alle drei Jahre einen Bericht über deren Anwendung und Wirksamkeit vor.
+
+(2) Der Bericht bewertet insbesondere:
+
+   **a)** die Auswirkungen auf die Ausübung der Religionsfreiheit,
+   
+   **b)** die Wirksamkeit bei der Bekämpfung missbräuchlicher Rechtfertigungen,
+   
+   **c)** mögliche unbeabsichtigte Nebenwirkungen oder diskriminierende Anwendungen,
+   
+   **d)** technologische Entwicklungen und neue Herausforderungen,
+   
+   **e)** die Notwendigkeit von Anpassungen oder Ergänzungen.
+
+(3) Der Bericht wird veröffentlicht und soll gegebenenfalls Vorschläge für Änderungen dieser Richtlinie enthalten.
+
+## Artikel 12: Umsetzung
+
+(1) Die Mitgliedstaaten erlassen und veröffentlichen die erforderlichen Rechts- und Verwaltungsvorschriften, um dieser Richtlinie spätestens 18 Monate nach ihrem Inkrafttreten nachzukommen. Sie teilen der Kommission unverzüglich den Wortlaut dieser Vorschriften mit.
+
+(2) Sie wenden diese Vorschriften ab dem in Absatz 1 genannten Datum an.
+
+(3) Wenn die Mitgliedstaaten diese Vorschriften erlassen, nehmen sie in den Vorschriften selbst oder durch einen Hinweis bei der amtlichen Veröffentlichung auf diese Richtlinie Bezug. Die Mitgliedstaaten regeln die Einzelheiten dieser Bezugnahme.
+
+(4) Die Mitgliedstaaten teilen der Kommission den Wortlaut der wichtigsten innerstaatlichen Rechtsvorschriften mit, die sie auf dem unter diese Richtlinie fallenden Gebiet erlassen.
+
+## Artikel 13: Verhältnis zu anderen Rechtsakten
+
+(1) Diese Richtlinie lässt strengere nationale Vorschriften zum Schutz der Nutzer, zur Bekämpfung illegaler Inhalte oder zur Durchsetzung der öffentlichen Ordnung unberührt, sofern diese mit dem Unionsrecht vereinbar sind.
+
+(2) Die Bestimmungen dieser Richtlinie gelten unbeschadet der Verordnung (EU) 2022/2065 (Gesetz über digitale Dienste), der Verordnung (EU) 2016/679 (Datenschutz-Grundverordnung) und sonstiger einschlägiger Unionsrechtsakte.
+
+(3) Bei der Anwendung dieser Richtlinie sind die Mitgliedstaaten an die Charta der Grundrechte der Europäischen Union gebunden, insbesondere an die Artikel 7 (Achtung des Privat- und Familienlebens), 10 (Gedanken-, Gewissens- und Religionsfreiheit), 11 (Freiheit der Meinungsäußerung) und 21 (Nichtdiskriminierung).
+
+## Artikel 14: Inkrafttreten
+
+Diese Richtlinie tritt ab heute (19.10.2025) nach ihrer Veröffentlichung im Amtsblatt der Europäischen Union in Kraft.
+
+
+## ANHANG I: BEISPIELHAFTE FALLKONSTELLATIONEN (informativ)
+
+### Beispiel 1: Verbotenes "Göttliches Alibi"
+Ein Nutzer verbreitet nachweislich falsche Gesundheitsinformationen über Impfungen und schreibt: "Gott hat mir in einer Vision gezeigt, dass diese Informationen die Wahrheit sind und ich sie verbreiten muss." → Verstoß liegt vor (objektive Falschinformation + theologische Rechtfertigung).
+
+### Beispiel 2: Legitime Religionsausübung
+Ein Nutzer teilt religiöse Lehren oder kritisiert bestimmte gesellschaftliche Entwicklungen aus religiöser Perspektive, ohne dabei gegen bestehende Regeln zu verstoßen. → Kein Verstoß, geschützte Meinungsäußerung.
+
+### Beispiel 3: Grenzfall
+Ein Nutzer äußert kontroverse religiöse Ansichten, die manche als beleidigend empfinden könnten, begeht aber keinen objektiven Regelverstoß. → Kein Verstoß im Sinne dieser Richtlinie, aber möglicherweise relevant für andere Moderationsrichtlinien.
+
+### Beispiel 4: Verbotenes "Göttliches Alibi"
+Ein Nutzer hackt sich in ein System ein und begründet dies mit: "Die heiligen Schriften gebieten mir, verborgene Wahrheiten ans Licht zu bringen." → Verstoß liegt vor (illegale Handlung + theologische Rechtfertigung).
+
+---
+
+*Entwurf zur Diskussion – Stand: Oktober 2025*
