@@ -1,0 +1,293 @@
+# RFI‑IRFOS Reinvestment Whitepaper & Statutes
+
+**Subtitle:** Governance & Transparency Framework for the Skybase Ecosystem (ORR • CGP • ACV • FECO)
+
+**Version:** v1.0
+**Date:** 06 Nov 2025
+**Maintainer:** Research Focus Institute – Interdisciplinary Research Facility for Open Sciences (RFI‑IRFOS)
+
+---
+
+## 0) Executive Summary
+
+RFI‑IRFOS betreibt eine zirkulare, zweckgebundene Kapitalarchitektur, die Forschung, Startups und ökologische Regeneration finanziert. Kernprinzip:
+
+> **10/90‑Prinzip:** 10 % Eigenwert-Anteil (Operator Reserve) zur Sicherung von Handlungsfähigkeit und Verantwortlichkeit; 90 % werden **ohne Verzögerung** in die Ökosystem-Pools reinvestiert (Grants, Venture‑Finanzierung, ökologische Assets, Mess- & Audit‑Layer).
+> **Transparenz:** Alle Flüsse, Regeln und Ergebnisse sind nachvollziehbar, revisionsfähig und öffentlich dokumentiert.
+
+Die Architektur besteht aus vier operativen Einheiten und einem Governance‑Kern:
+
+* **ORR – Ouroboros Reserves & Research**: Erwerb und Renaturierung degradierten Lands; Forschung & Biodiversitätszentren.
+* **CGP – Chiron Grant Program**: Grants für Forschung, Bildung, Grassroots‑Projekte; schlanker Onboarding‑Prozess.
+* **ACV – Aurora Catalyst Ventures**: faire, umsatzgebundene Projektfinanzierung (kein Zins, keine Ausbeutung).
+* **FECO – The Footprint Economy**: Wirkungsmessung, Indizes, öffentliche Dashboards.
+* **RFI‑IRFOS (Core)**: Governance, Compliance, Buchhaltung, Audits, Wissensarchiv.
+
+---
+
+## 1) Mission, Werte & Scope
+
+**Mission:** Kapital, Wissen und Infrastruktur so zu organisieren, dass daraus reproduzierbare, gerechte und resiliente Wertschöpfungszyklen entstehen: *Regenerate • Educate • Catalyze • Measure*.
+
+**Werte:** Würde, Fairness, Offenheit, Sicherheit, Rechenschaft, Langfristigkeit.
+
+**Scope:** Forschung & Bildung, ökologische Renaturierung, Frühphasen‑Innovation, lokale Kreislaufökonomien, Mess- & Audit‑Infrastrukturen.
+
+---
+
+## 2) Rechts- & Governance‑Rahmen
+
+**2.1 Organe**
+
+* **Kuratorium/Board (3–7 Mitglieder):** Strategie, Budget, Ernennung der Leitungen, Genehmigung von Richtlinien.
+* **Operative Leitung (pro Einheit):** ORR, CGP, ACV, FECO.
+* **Audit‑Ausschuss (2–3 unabhängige Personen):** Interne Kontrolle & jährliche Berichte.
+
+**2.2 Beschlussfassung**
+
+* Einfache Mehrheit für operative Entscheidungen; qualifizierte 2/3‑Mehrheit für Statutenänderungen, Liquidation, Risk‑Policy.
+
+**2.3 Interessenkonflikte**
+
+* Offenlegungspflicht; Betroffene enthalten sich der Stimme.
+* Transaktionen mit verbundenen Personen nur zu marktüblichen Konditionen + externem Vergleichsnachweis.
+
+**2.4 Compliance**
+
+* **KYC/AML**, **Sanktionslisten‑Screening**, **Exportkontrolle**, **Anti‑Korruption**, **GDPR/DSGVO**, **Arbeitssicherheit**, **Menschenrechte/ESG**.
+* Aktivitäten in Hochrisiko‑Regionen nur nach dokumentierter *Human‑Rights Due Diligence* und Rechtsgutachten.
+
+---
+
+## 3) Finanzarchitektur & Mittelverwendung
+
+**3.1 Zuflüsse (Beispiele):** Spenden, Projekt‑Erlöse, Lizenzen, Rückflüsse aus ACV, Einnahmen aus Land‑Assets, Services (API/Research).
+
+**3.2 10/90‑Prinzip (Verteilungs‑Waterfall):**
+
+1. **10 % Operator Reserve** – Deckung von Kernbetrieb, Notfallfonds, persönliche Wertanerkennung gemäß Mandat (fair‑pay Leitlinie).
+2. **90 % Ecosystem Pool** – automatische, regelbasierte Reallokation in vier Sub‑Pools:
+
+   * **ORR Pool:** 30–50 % (Renaturierung & Landentwicklung)
+   * **CGP Pool:** 20–40 % (Grants)
+   * **ACV Pool:** 20–40 % (Venture/Revenue‑Share)
+   * **FECO Pool:** 5–10 % (Messung & Audit)
+   * **Admin Cap:** ≤ 10 % quer über alle Pools
+
+   *Die konkreten Prozentwerte werden jährlich vom Board festgelegt (Beschluss + Begründung im Transparenzbericht).*
+
+**3.3 Reserven & Notfälle**
+
+* Mindestreserve: 3–6 Monatsbetrieb.
+* Notfallprotokoll mit Freigabe durch Board‑Mehrheit; Nachbericht im Public Ledger.
+
+---
+
+## 4) ORR – Ouroboros Reserves & Research
+
+**Zweck:** Aufbau regenerativer Natur‑Assets und wissenschaftlicher Zentren auf degradierten Flächen.
+
+**4.1 Investitionskriterien**
+
+* Rechtsklarheit des Titels, Sanktions‑/Embargo‑Check, Gemeinwohl‑Kompatibilität.
+* Umweltpotenzial (CO₂‑Bindung, Biodiversitätsgewinn, Wasserrückhalt).
+* Sicherheit & Zugänglichkeit, lokale Governance‑Partner, Community‑Einbindung.
+
+**4.2 Entwicklungsplan (Phasen)**
+
+1. **Acquisition & Legal** – Titelprüfung, Satellitendaten, Umweltgutachten.
+2. **Stabilisierungsphase** – Erosionsschutz, Wasser, Erstbepflanzung.
+3. **Research & Learning Sites** – Kooperation mit Universitäten/NGOs; offene Daten.
+4. **Community & Jobs** – lokale Ranger‑Programme, Forstschulen, ökologische Wertschöpfung.
+
+**4.3 KPIs & Reporting**
+
+* Hektar renaturiert, Artenindizes, Tonnen CO₂‑Äquivalente, Wasserretention, lokale Beschäftigung.
+* Jährlicher **ORR‑Impact Report** + Geo‑Dashboard (Open Data wo möglich).
+
+---
+
+## 5) CGP – Chiron Grant Program
+
+**Zweck:** Niedrigschwellige Förderung von Forschung, Bildung, Grassroots & Kultur‑Tech.
+
+**5.1 Ticketgrößen & Kategorien**
+
+* **Micro‑Grants:** bis 500 € (Rapid Response, 72h‑Entscheid).
+* **Seed‑Grants:** 500–5 000 € (4‑Wochen‑Zyklus).
+* **Lab‑Grants:** 5 000–25 000 € (zweistufig: Skizze + Review).
+
+**5.2 Verfahren**
+
+* **Bewerbung (max. 5 Fragen):** Ziel, Nutzen, Team, Budget, Offenlegungen.
+* **Review:** 3‑Personen‑Panel (fachlich + community).
+* **Pflichten:** Kurz‑Zwischenbericht, Abschluss in Story‑/Daten‑Form, **Weitergabeprinzip** (eine Person nachziehen/mentoren).
+
+**5.3 Ausschlüsse**
+
+* Waffen, Überwachungsmissbrauch, Hass‑/Diskriminierungsprojekte, Greenwashing.
+
+---
+
+## 6) ACV – Aurora Catalyst Ventures (Revenue‑Share)
+
+**Zweck:** Faire, umsatzgebundene Finanzierung für Startups/Produkte ohne Zins und ohne ausbeuterische Kontrolle.
+
+**6.1 Standard‑Termsheet (Default, öffentlich):**
+
+* **Kapitalzusage (K)**: Betrag gemäß Bedarf & Due Diligence.
+* **Rückführung:** **10 % Umsatz je Produkt** bis **K vollständig zurückgeführt** ist.
+* **Post‑Return‑Share:** Danach **5 % Umsatz je Produkt** auf Dauer (symbolischer Ecosystem‑Rückfluss).
+* **Keine Zinsen**, keine persönlichen Sicherheiten, keine Verwässerung des Cap‑Tables durch diese Vereinbarung.
+* **Transparenzpflicht:** Monatsumsatzreport je Produkt; Prüfung durch FECO/Audit.
+* **Mentoring & Infra:** Zugang zu Skybase‑Ressourcen (API, Research, Netzwerk).
+
+**6.2 Beispielrechnung**
+
+* K = 50 000 €; Produktumsatz mtl. 10 000 € → Rückführung in ~5 Monaten (10 % von 10 000 € = 1 000 €/Monat).
+* Ab Monat 6: 5 %‑Beitrag = 500 €/Monat an Ecosystem‑Pool.
+
+**6.3 Sonderfälle**
+
+* **Produktabkündigung:** 5 %‑Beitrag entfällt; bis dahin offene Verbindlichkeiten bleiben.
+* **Pivot:** Neue Produkt‑IDs, gesonderte Tracking‑Streams; Board‑Freigabe.
+
+---
+
+## 7) FECO – The Footprint Economy (Measurement & Audit)
+
+**Zweck:** Wirkung sichtbar machen; Vertrauen messbar machen.
+
+**7.1 Kennzahlensystem (Auszug)**
+
+* **Environmental:** CO₂, Biodiversität, Wasser, Energieintensität.
+* **Social:** faire Bezahlung, Diversität, lokale Wertschöpfung, Mentoringstunden.
+* **Governance:** Offenlegung, Audit‑Ergebnisse, Konfliktfälle & Lösungen.
+
+**7.2 Public Dashboards**
+
+* Jährlicher **Impact Index** pro Einheit; Datendownload (Open License, wo rechtlich möglich).
+
+---
+
+## 8) Transparenz, Berichte & Open Data
+
+* **Monatlich:** Kurzbericht je Einheit (Finanzfluss + Highlights)
+* **Vierteljährlich:** Konsolidierter Ecosystem‑Report (inkl. Waterfall‑Verteilung)
+* **Jährlich:** Testierter Finanzbericht + Impact Report + Audit Summary
+* **Ledger:** Öffentliche Liste aller Grants/Deals mit Kernparametern (Betrag, Zweck, Status).
+* **Dokumentvorlagen:** Grant‑Agreement, Revenue‑Share‑Agreement, IP‑/Datenklauseln.
+
+---
+
+## 9) IP‑, Daten‑ & Ethik‑Leitlinien
+
+* **IP:** Ergebnisse aus Grants primär offen (OSI/Creative Commons), es sei denn, Schutz dient Gemeinwohl‑Skalierung; dann „Protect‑to‑Open“ (zeitlich begrenzter Schutz, danach Offenlegung).
+* **Daten:** Privacy‑by‑Design; DSGVO‑konforme Verarbeitung; Pseudonymisierung/Anonymisierung; Daten‑Treuhand wo sinnvoll.
+* **Ethik:** Kein Einsatz für Überwachung, Diskriminierung, Gewalt; Pflicht zur Risikoanalyse.
+
+---
+
+## 10) Risiko, Due Diligence & Regionen mit erhöhter Komplexität
+
+* **DD‑Checklisten:** Rechtstitel, Politik‑/Sanktionslage, Sicherheit, Umwelt‑Baseline, Community‑Stakeholder.
+* **Go/No‑Go‑Matrix:** *Impact‑Potenzial × Rechts‑/Sicherheitsrisiko*; Freigabe nur bei dokumentierter Risikomitigierung.
+* **Externe Gutachten:** In Konflikt-/Sanktionsregionen obligatorisch.
+
+---
+
+## 11) Operative Standards & Prozesse (Kurz)
+
+**11.1 Intake → Decision → Disbursement → Monitoring → Closure**
+
+* SLA‑Ziele: Micro‑Grants 72 h, Seed 4 Wochen, ACV 6–8 Wochen.
+* Digitale Pipeline (Ticket‑IDs; Status öffentlich einsehbar, sensible Daten geschützt).
+
+**11.2 Reporting‑Templates**
+
+* 1‑Seiten‑Zwischenbericht (Ziele, Abweichungen, Learnings).
+* Abschlussbericht (Kennzahlen + Story).
+
+**11.3 Audit‑Pfad**
+
+* Prüffähige Belege; revisionssichere Archivierung; Zufallsstichproben.
+
+---
+
+## 12) Kommunikation & Marke
+
+* Klare, wahrhaftige Kommunikation; keine Heilsversprechen.
+* Namensräume: ORR, CGP, ACV, FECO als **verbundenes, aber eigenständiges** System.
+* Offenlegung von Fehlern & Korrekturen als Kulturmerkmal.
+
+---
+
+## 13) Beispiel: Jahresbudget (Schema)
+
+| Pool                |             Anteil | Betrag (bei 1 000 000 € Zufluss) |
+| ------------------- | -----------------: | -------------------------------: |
+| Operator Reserve    |               10 % |                        100 000 € |
+| ORR                 | 35 % von Ecosystem |                        315 000 € |
+| CGP                 | 25 % von Ecosystem |                        225 000 € |
+| ACV                 | 30 % von Ecosystem |                        270 000 € |
+| FECO                | 10 % von Ecosystem |                         90 000 € |
+| **Summe Ecosystem** |           **90 %** |                    **900 000 €** |
+
+*Prozentsätze jährlich anpassbar; jede Änderung wird begründet veröffentlicht.*
+
+---
+
+## 14) Rechtsdurchsetzung, Streitlösung & Sanktionen
+
+* **Verträge:** Lokales Recht des Sitzlands oder vereinbarte Schiedsgerichtsbarkeit.
+* **Mediation → Schiedsverfahren:** zweistufig, Fristen & Kostenklarheit.
+* **Sanktionen bei Verstößen:** Rückforderung, Projektstopp, Ausschluss aus künftigen Programmen.
+
+---
+
+## 15) Inkrafttreten & Änderungen
+
+* Diese Statuten treten mit Board‑Beschluss **v1.0 (06.11.2025)** in Kraft.
+* Änderungen bedürfen 2/3‑Mehrheit; Changelog wird öffentlich geführt.
+
+---
+
+## 16) Glossar (Auswahl)
+
+* **10/90‑Prinzip:** 10 % Operator Reserve, 90 % Ecosystem Reinvestment.
+* **Revenue‑Share:** Umsatzbeteiligung statt Zins/Equity.
+* **Protect‑to‑Open:** Temporärer IP‑Schutz zwecks Skalierung, danach Offenlegung.
+* **Impact Index:** FECO‑Kennzahlensystem zur Wirkungsmessung.
+
+---
+
+### Anhänge (Vorlagen – auszugsweise)
+
+**A1) Micro‑Grant Antrag (5 Fragen)**
+
+1. Was ist das Ziel?
+2. Welcher Nutzen für Community/ Wissenschaft?
+3. Wer seid ihr?
+4. Wofür wird das Geld konkret eingesetzt (Budget)?
+5. Welche Risiken/Offenlegungen?
+
+**A2) ACV – Standard‑Klauseln (Kurzfassung)**
+
+* 10 % Umsatz bis K zurückgeführt; danach 5 % dauerhaft pro Produkt.
+* Keine Zinsen, keine persönlichen Sicherheiten.
+* Monatsreporting; Audit‑Zugriff.
+* Auflösung bei Produktende; offene Beträge bleiben.
+
+**A3) ORR – Due‑Diligence‑Checkliste (Auszug)**
+
+* Rechtstitel + Sanktionsprüfung; Umwelt‑Baseline; Community‑Einbindung; Sicherheitslage; Versicherbarkeit; Partner‑MoU.
+
+**A4) Transparenz‑Policy (Kurz)**
+
+* Alle Beschlüsse, Flüsse und Berichte auf öffentlichem Ledger/Dashboard; personenbezogene Daten geschwärzt.
+
+---
+
+**Kontakt (öffentliche Fassung):**
+RFI‑IRFOS // Skybase — Governance & Transparency Desk
+[Kontaktformular/Adresse einfügen]
